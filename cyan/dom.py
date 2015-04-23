@@ -1,4 +1,3 @@
-
 import string
 from http.client import CannotSendRequest
 import datetime
@@ -15,13 +14,12 @@ from cyan import security, common
 
 
 def get_browser() -> webdriver.chrome.webdriver.WebDriver:
+    """
+    Get the shared web driver.
+
+    :return: The web driver (WebDriver)
+    """
     return common.browser
-
-
-def create_warranty_implicit_wait():
-    driver = webdriver.Chrome()
-    # driver.implicitly_wait(10)
-    driver.get("http://localhost/Cosacs/Warranty/Warranties/New")
 
 
 def wait_for_text_present(text_to_present: string, text_element: string, timer: int=30, by: By=By.ID):
@@ -44,6 +42,7 @@ def wait_for_text_present(text_to_present: string, text_element: string, timer: 
 def wait_presence_of_element(search_filter, timer: int=10, by: By=By.ID):
     """
     Wait for an element to be loaded on the page
+
     :rtype : None
     :param search_filter: The element identifier to search by
     :param timer: time to wait before it through a timeout error
@@ -59,6 +58,7 @@ def wait_presence_of_element(search_filter, timer: int=10, by: By=By.ID):
 def wait_presence_of_element_by_text(element_text: string, timer: int=10):
     """
     Wait for an element to be loaded on the page
+
     :rtype : None
     :param element_text: The element text to search by
     :param timer: time to wait before it through a timeout error
@@ -90,7 +90,8 @@ def element_text_available_callback(element_text: string, element: string, by: B
 def wait_visibility_of_element(search_filter, timer: int=10, element_by: By=By.ID,
                                msg: string='Waiting for element timed out'):
     """
-    Wait for an element to be loaded and become visible on the page
+    Wait for an element to be loaded and become visible on the page.
+
     :param search_filter: The element identifier to search by
     :param timer: time to wait before it through a timeout error
     :param element_by: element filter type
@@ -103,7 +104,8 @@ def wait_visibility_of_element(search_filter, timer: int=10, element_by: By=By.I
 def wait_visibility_of_element_by_text(element_text: string, timer: int=10,
                                        msg: string='Waiting for element timed out'):
     """
-    Wait for an element to be loaded and become visible on the page
+    Wait for an element to be loaded and become visible on the page.
+
     :param element_text: The element's text to search by
     :param timer: time to wait before it through a timeout error
     :param msg: Message to fire when timeout error thrown
@@ -117,7 +119,8 @@ def wait_visibility_of_element_by_text(element_text: string, timer: int=10,
 
 def is_element_present(search_filter, element_by: By=By.ID) -> bool:
     """
-    Check the present of an element on the current page
+    Check the present of an element on the current page.
+
     :param search_filter: the element filter value:
     :param element_by: the element filter type
     """
@@ -171,9 +174,15 @@ def is_element_visible_attr(attr_name: string, attr_value: string, tag: string='
     return state
 
 
-# Checks if the element has the 'disabled' class attached to the element
-def isElementDisabled(css):
-    css = css + ' .disabled'
+def is_element_disabled(css):
+    """
+    Checks if the element has the 'disabled' class attached to the element.
+
+    :param css:
+    :return:
+    """
+    css += ' .disabled'
+
     try:
         we = get_element(css, By.CSS_SELECTOR)
         state = True
@@ -183,8 +192,14 @@ def isElementDisabled(css):
     return state
 
 
-# To check if a tick box is selected
 def is_element_selected(search_filter, element_by: By=By.ID) -> bool:
+    """
+    To check if a tick box is selected.
+
+    :param search_filter:
+    :param element_by:
+    :return:
+    """
     security.check_self()
 
     try:
@@ -267,8 +282,13 @@ def select_from_dropdown_CSS(css: string, selection: string):
     wait(0.5)
 
 
-def selectFromAdd(css, name):
-    # Enter the 'name' in the search text box then click on 'Enter' to select
+def select_from_add(css, name):
+    """
+    Enter the 'name' in the search text box then click on 'Enter' to select
+
+    :param css:
+    :param name:
+    """
     we = get_element(css, By.CSS_SELECTOR)
     input = we.find_element(By.CSS_SELECTOR, 'input')
     input.send_keys(name)
@@ -301,7 +321,8 @@ def validate_element(element: WebElement):
 
 def get_element(search_filter: string, by: By=By.ID) -> WebElement:
     """
-    Get an element by its identifier
+    Get an element by its identifier.
+
     :rtype : object
     :param search_filter: The element identifier to search by
     :param by: element filter type
@@ -313,7 +334,8 @@ def get_element(search_filter: string, by: By=By.ID) -> WebElement:
 
 def get_element_by_value(value: string) -> WebElement:
     """
-    Get DOM element by its value
+    Get DOM element by its value.
+
     :param value: Element's value
     :return: The element
     """
@@ -323,9 +345,9 @@ def get_element_by_value(value: string) -> WebElement:
 
 
 def get_element_by_text(value: string, search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
-    # xpath = "//*[contains(text(), '%s')]" % value
     """
-    Get DOM element by its text
+    Get DOM element by its text.
+
     :param value:
     :param search_type:
     :return:
@@ -346,7 +368,8 @@ def get_element_by_text(value: string, search_type: common.TextSearchType=common
 
 def get_elements(search_filter: string, by: By=By.ID):
     """
-    Get all element by its identifier
+    Get all element by its identifier.
+
     :param search_filter: The elements identifier to search by
     :param by: element filter type
     :return:
@@ -411,8 +434,11 @@ def wait(timer):
     time.sleep(timer)
 
 
-# takes a screenshot of the current webpage and saves it in a folder called Screenshots
 def scroll_to_bottom():
+    """
+    takes a screenshot of the current web page and saves it in a folder called Screenshots.
+
+    """
     security.check_self()
     reached_bottom = False
     while not reached_bottom:
@@ -483,8 +509,13 @@ def scroll_down_100():
     common.browser.execute_script("window.scrollBy(0, 100)")
 
 
-# takes a screenshot of the current webpage and saves it in a folder called Screenshots
+#
 def screenshot(testCaseName):
+    """
+    takes a screenshot of the current webpage and saves it in a folder called Screenshots.
+
+    :param testCaseName:
+    """
     screenshot_dir = './Screenshots'
     if not os.path.exists(screenshot_dir):
         os.makedirs(screenshot_dir)
@@ -505,9 +536,13 @@ def scroll_element_into_view(elementWe):
     wait(0.5)
 
 
-# change the day/month/year on the calendar pop up as expected
-# format for dateToChangeTo is Mon 21 May, 2014
 def click_Calendar(dateToChangeTo):
+    """
+    change the day/month/year on the calendar pop up as expected format for dateToChangeTo is Mon 21 May, 2014
+
+    :rtype : object
+    """
+
     # variables
     # Year
     calendarYearSelected = '.ui-datepicker-year [selected="selected"]'
@@ -624,8 +659,14 @@ def click_Calendar_djc(dateToChangeTo):
         return dateWebAddress
 
 
-# Compare the two lists nd return True if they are the same otherwise return False
-def listCompare(list1, list2):
+def list_compare(list1, list2):
+    """
+    Compare the two lists nd return True if they are the same otherwise return False.
+
+    :param list1:
+    :param list2:
+    :return:
+    """
     count1 = len(list1)
     count2 = len(list2)
     result = True

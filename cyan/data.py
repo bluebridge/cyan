@@ -4,8 +4,6 @@
     Note:
         To see what options (providers) available with Faker, please refer to:
         'http://fake-factory.readthedocs.org/en/latest/providers/base.html'
-
-    :copyright: (c) 2015 by Blue Bridge Ltd.
 """
 
 import string
