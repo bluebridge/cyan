@@ -20,10 +20,14 @@ import shlex
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#sys.path.insert(0, os.path.abspath('.'))
-project_path = os.path.abspath('../../source')
+# sys.path.insert(0, os.path.abspath('.'))
+project_path = os.path.abspath('../..')
 sys.path.insert(0, project_path)
 print(project_path)
+
+# List of patterns, relative to source directory, that match files and
+# directories to ignore when looking for source files.
+exclude_patterns = ['_build', '**tests**', '**spi**']
 
 # -- General configuration ------------------------------------------------
 
@@ -211,25 +215,25 @@ htmlhelp_basename = 'cyandoc'
 # -- Options for LaTeX output ---------------------------------------------
 
 latex_elements = {
-# The paper size ('letterpaper' or 'a4paper').
-#'papersize': 'letterpaper',
+    # The paper size ('letterpaper' or 'a4paper').
+    #'papersize': 'letterpaper',
 
-# The font size ('10pt', '11pt' or '12pt').
-#'pointsize': '10pt',
+    # The font size ('10pt', '11pt' or '12pt').
+    #'pointsize': '10pt',
 
-# Additional stuff for the LaTeX preamble.
-#'preamble': '',
+    # Additional stuff for the LaTeX preamble.
+    #'preamble': '',
 
-# Latex figure (float) alignment
-#'figure_align': 'htbp',
+    # Latex figure (float) alignment
+    #'figure_align': 'htbp',
 }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'cyan.tex', 'cyan Documentation',
-   'Blue Bridge', 'manual'),
+    (master_doc, 'cyan.tex', 'cyan Documentation',
+     'Blue Bridge', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -272,9 +276,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'cyan', 'cyan Documentation',
-   author, 'cyan', 'One line description of project.',
-   'Miscellaneous'),
+    (master_doc, 'cyan', 'cyan Documentation',
+     author, 'cyan', 'One line description of project.',
+     'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
@@ -288,3 +292,17 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+# Sort members by type
+autodoc_member_order = 'groupwise'
+
+
+def skip(app, what, name, obj, skip, options):
+    # Ensure that the __init__ method gets documented.
+    if name == "__init__":
+        return False
+    return skip
+
+
+def setup(app):
+    app.connect("autodoc-skip-member", skip)

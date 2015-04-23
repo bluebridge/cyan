@@ -1,10 +1,9 @@
 """
-    data
-    ~~~
     This module contains functions that related to manipulate data.
 
-    To see what options (providers) available with Faker, please refer to:
-    'http://fake-factory.readthedocs.org/en/latest/providers/base.html'
+    Note:
+        To see what options (providers) available with Faker, please refer to:
+        'http://fake-factory.readthedocs.org/en/latest/providers/base.html'
 
     :copyright: (c) 2015 by Blue Bridge Ltd.
 """
@@ -22,6 +21,7 @@ fake = Faker()
 def sql_execute(sql: string):
     """
     Execute a SQL statement into the DB
+
     :param sql: The SQL statement to be executed.
     """
     conn = pypyodbc.connect(common.connection_string)
@@ -35,6 +35,7 @@ def sql_execute(sql: string):
 def sql_select(sql: string) -> string:
     """
     Fetch a record set from DB by executing a SQL statement
+
     :param sql: The SQL statement that contain the select
     :return:
     """
@@ -51,6 +52,7 @@ def sql_select(sql: string) -> string:
 def sql_execute_file(path: string):
     """
     Execute a SQL statement from a file system into the DB
+
     :param path: The path the file that contains the sql statement/s
     """
     f = open(path, 'r')
@@ -62,10 +64,13 @@ def sql_execute_file(path: string):
 
 
 def convert_rows_to_array(rows):
-    """
 
-    :param rows:
-    :return:
+    """
+    Convert rows to an array
+
+    :param rows: The input row
+
+    :return: (array) The convert rows
     """
     result = []
     count = len(rows)
@@ -78,6 +83,7 @@ def convert_rows_to_array(rows):
 def get_random_text(prefix: string) -> string:
     """
     Get a random word post-fixed with a random number
+
     :param prefix: The prefix for the random text
     :return: A random word post-fixed with a random number within the range of (0-9999)
     """

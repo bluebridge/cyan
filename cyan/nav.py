@@ -1,5 +1,4 @@
 import string
-import requests
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.remote.webelement import WebElement
@@ -247,13 +246,3 @@ def get_menu_item(ele: WebElement) -> MenuItem:
         menu_item.nodes.append(sub_menu)
 
     return menu_item
-
-
-def get_web_request_status_code(url: string):
-
-    try:
-        r = requests.head(url)
-        return r.status_code
-    except requests.ConnectionError:
-        # failed to connect
-        return -1

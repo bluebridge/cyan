@@ -26,16 +26,15 @@ def create_warranty_implicit_wait():
 
 def wait_for_text_present(text_to_present: string, text_element: string, timer: int=30, by: By=By.ID):
     """
+    Wait for a string literal to be present on the page.
 
-
-    :param text_to_present:
-    :param text_element:
-    :param timer:
-    :param by:
-    :rtype : None
+    :param text_to_present: The string to wait for its present
+    :param text_element: The dom element whose has the string as its value.
+    :param timer: Time to wait before it's timeout
+    :param by: The string's attribute
     """
     security.check_self()
-    time.sleep(0.5)
+
     wait_visibility_of_element(text_element, timer, by)
 
     WebDriverWait(common.browser, timeout=10).until(
