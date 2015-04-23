@@ -26,8 +26,8 @@ firstname = "FN%s" % random_int
 lastname = "LN%s" % random_int
 homephone = random_int
 mobilephone = random_int
-username = 99999
-password = 'ingres##'
+username = 'user'
+password = 'password'
 
 
 class TextSearchType(Enum):

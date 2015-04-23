@@ -66,9 +66,8 @@ def login(user=None, password=None):
     if is_logged():
         return
     else:
-        u = user or r"99999"
-        pw = password or r"ingres##"
-        #pw = password or r"12345**"
+        u = user or r"user"
+        pw = password or r"password"
 
         common.browser.get(common.site_url)
         __wait_element_presence("username", 20)
