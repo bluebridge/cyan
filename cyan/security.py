@@ -55,7 +55,8 @@ def check_self(check_logging: bool=True):
 
 def login(user=None, password=None):
     """
-    Log in into Cosacs application
+    Log in into Cosacs application.
+
     :param user: User name
     :param password: Password
 
@@ -138,7 +139,8 @@ def __is_all_windows_closed() -> bool:
 
 def __wait_element_presence(search_filter, timer: int=30, by: By=By.ID):
     """
-    Wait for an element to be loaded on the page
+    Wait for an element to be loaded on the page.
+
     :rtype : None
     :param search_filter: The element identifier to search by
     :param timer: time to wait before it through a timeout error

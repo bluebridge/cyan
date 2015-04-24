@@ -12,7 +12,8 @@ from selenium.common.exceptions import *
 
 def write_on_textbox(text: string, search_filter: string, by: By=By.ID):
     """
-    Write on a textbox element
+    Write on a textbox element.
+
     :param text: The text to write
     :param search_filter: The element identifier to search by
     :param by: element filter type
@@ -35,7 +36,8 @@ def write_on_element(text: string, element: WebElement):
 
 def click_button(button_text: string):
     """
-    Click on a button by its display text
+    Click on a button by its display text.
+
     :param button_text: The button's display text
     """
     security.check_self()
@@ -46,7 +48,8 @@ def click_button(button_text: string):
 
 def click_button_by_id(button_id: string):
     """
-    Click on a button by its id
+    Click on a button by its id.
+
     :param button_id: The button's id
     """
     security.check_self()
@@ -56,7 +59,8 @@ def click_button_by_id(button_id: string):
 
 def fill_textbox_by_label_text(label_text, value_for_textbox):
     """
-    Write to  a textbox by its label text
+    Write to  a textbox by its label text.
+
     :param label_text: The textbox' label text
     :param value_for_textbox: The text to write
     """
@@ -74,7 +78,8 @@ def fill_textbox_by_label_text(label_text, value_for_textbox):
 
 def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, attr_name: string='placeholder'):
     """
-    Write to  a textbox by its attribute value
+    Write to  a textbox by its attribute value.
+
     :param value_to_fill: Text to write into the text box
     :param attr_value: Which attribute value to filter with
     :param attr_name: the attribute name
@@ -91,7 +96,8 @@ def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, a
 
 def fill_text_boxes_by_labels_text(labels):
     """
-    Write to  a series of textbox by tier label texts
+    Write to  a series of textbox by tier label texts.
+
     :param labels: The textbox' label texts
     """
     security.check_self()
@@ -105,7 +111,8 @@ def fill_text_boxes_by_labels_text(labels):
 
 def fill_text_boxes_by_attribute_value(values: dict, attr_name: string='placeholder'):
     """
-    Write to  a series of textbox by trier attribute values
+    Write to  a series of textbox by trier attribute values.
+
     :param values: Dictionary of 'attribute values' with corresponded text to write
     :param attr_name: The attribute name to filter with
     """
@@ -116,7 +123,8 @@ def fill_text_boxes_by_attribute_value(values: dict, attr_name: string='placehol
 
 def select2_set_value(grayed_text: string, value: string):
     """
-    :param grayed_text: the grayed text inside the select2
+
+    :param grayed_text: the grayed text inside the select2.
     :param value: value to set to the select2
     """
     security.check_self()
@@ -140,6 +148,7 @@ def select2_set_value(grayed_text: string, value: string):
 
 def select2_set_value_ex(grayed_text: string, value: string):
     """
+
     :param grayed_text: the grayed text inside the BlueBridge select2
     :param value: value to set to the select2
     """
@@ -199,7 +208,8 @@ def clear_textbox(textbox_filter: string, by: By=By.ID, submit: bool=False):
 
 def click_element(search_filter: string, by: By=By.ID):
     """
-    Click on element
+    Click on element.
+
     :rtype : object
     :param search_filter: The element identifier to search by
     :param by: element filter type
@@ -212,6 +222,7 @@ def click_element(search_filter: string, by: By=By.ID):
 def click_on_element(element_to_click: WebElement):
     """
     Perform a click on an element
+
     :param element_to_click: element to click
     """
     security.check_self()
@@ -315,7 +326,8 @@ def is_element_enabled(search_filter, element_by: By=By.ID) -> bool:
 
 def get_element_attribute(search_filter: string, attribute: string, by: By=By.ID) -> string:
     """
-    Get an element's attribute value by its identifier
+    Get an element's attribute value by its identifier.
+
     :rtype : object
     :param search_filter: The element identifier to search by
     :param attribute: the target attribute name
@@ -329,7 +341,8 @@ def get_element_attribute(search_filter: string, attribute: string, by: By=By.ID
 
 def get_element_value(search_filter: string, by: By=By.ID) -> string:
     """
-    Get an element's value by its identifier
+    Get an element's value by its identifier.
+
     :rtype : object
     :param search_filter: The element identifier to search by
     :param by: element filter type

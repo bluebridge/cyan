@@ -31,6 +31,7 @@ def refresh():
 def go(url: string):
     """
     Navigate to a specific Url.
+
     :param url: The url to go to. It can a relative or absolute url.
     """
     security.check_self()
@@ -42,7 +43,8 @@ def go(url: string):
 
 def multi_menu(menu_hierarchy: string, delimiter: string=","):
     """
-    Click on a navigation menu item (work on multi levels menu)
+    Click on a navigation menu item (work on multi levels menu).
+
     :param menu_hierarchy: The menu item hierarchy as string separated by delimiter
     :param delimiter: The delimiter that separate the menu items
     """
@@ -55,7 +57,8 @@ def multi_menu(menu_hierarchy: string, delimiter: string=","):
 
 def menu(parent_item: string, child_item: string):
     """
-    Click on a navigation menu item (only work on a 2 level menu)
+    Click on a navigation menu item (only work on a 2 level menu).
+
     :param parent_item: The parent menu item
     :param child_item: The sub menu item
     """
@@ -170,10 +173,13 @@ def menu_CSS(parent_item: string, child_item: string):
     hover.perform()
 
 
-#
-# Uses the parent menu name to return a list of all the sub menu's that are available
-#
 def get_menu_options(parent_item: string):
+    """
+    Uses the parent menu name to return a list of all the sub menu's that are available.
+
+    :param parent_item:
+    :return:
+    """
     menuItems = list()
     input.click_element(parent_item, by=By.LINK_TEXT)
     children = dom.get_elements(".dropdown.open li", By.CSS_SELECTOR)
@@ -185,10 +191,13 @@ def get_menu_options(parent_item: string):
     return menuItems
 
 
-#
-# Uses the parent menu name to return a list of all the sub menu's that are available including sub menu's
-#
 def get_all_menu_options(parent_item: string):
+    """
+    Uses the parent menu name to return a list of all the sub menu's that are available including sub menu's.
+
+    :param parent_item:
+    :return:
+    """
     menuItems = list()
     input.click_element(parent_item, by=By.LINK_TEXT)
     children = dom.get_elements('a[href^="/Merchandising"]', By.CSS_SELECTOR)
