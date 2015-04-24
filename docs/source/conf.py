@@ -21,6 +21,8 @@ import shlex
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
+import mock
+
 project_path = os.path.abspath('../..')
 sys.path.insert(0, project_path)
 print(project_path)
@@ -306,3 +308,7 @@ def skip(app, what, name, obj, skip, options):
 
 def setup(app):
     app.connect("autodoc-skip-member", skip)
+
+MOCK_MODULES = ['pypyodbc']
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock.Mock()
