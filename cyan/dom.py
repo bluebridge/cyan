@@ -1,3 +1,10 @@
+"""
+    This module contains the functionality that related to DOM tree like:
+        # Finding DOM's elements.
+        # Checking the elements state (Present, visible,..etc.)
+
+"""
+
 import string
 from http.client import CannotSendRequest
 import datetime
@@ -323,10 +330,10 @@ def get_element(search_filter: string, by: By=By.ID) -> WebElement:
     """
     Get an element by its identifier.
 
-    :rtype : object
     :param search_filter: The element identifier to search by
-    :param by: element filter type
+    :param by: Element's filter type
     :return:
+    :rtype: WebElement
     """
     security.check_self()
     return common.browser.find_element(by, search_filter)

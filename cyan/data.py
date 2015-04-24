@@ -2,7 +2,7 @@
     This module contains functions that related to manipulate data.
 
     Note:
-        To see what options (providers) available with Faker, please refer to:
+        *To see what options (providers) available with Faker, please refer to:*
         'http://fake-factory.readthedocs.org/en/latest/providers/base.html'
 """
 
