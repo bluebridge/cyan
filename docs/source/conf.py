@@ -52,7 +52,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The encoding of source files.
-#source_encoding = 'utf-8-sig'
+# source_encoding = 'utf-8-sig'
 
 # The master toctree document.
 master_doc = 'index'
@@ -324,21 +324,47 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 
 def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
-    test = ''
-    # if signature and name == 'cyan.data.get_random_text':
-    # if signature and name == 'cyan.dom.element_text_available_callback':
-    if signature and name == 'cyan.dom.select_from_dropdown':
-        rep = signature
-        # re.sub(r"(module \').*(\'\sfrom\s\')", "", rep)
-        rep = re.sub(r"module\s\'", "", rep)
-        rep = re.sub(r"\' from \'.*\'", "", rep)
-        # re.sub(r"(module \').*(\' from \'\s)", "", rep)
-        print('rep = %s' % rep)
-        test = re.match(r"(\(.*\: \<)module \'(.*)\' from.*(.*\>\))", signature)
-        # print(test.group())
+    if signature:
+        signature = process(signature)
 
-    if test:
-        signature = '{0}{1}{2}'.format(test.group(1), test.group(2), test.group(3))
-        # print(signature)
+        signature = signature.replace("selenium.webdriver.common.by.", "")\
+            .replace("selenium.webdriver.remote.webelement.","")\
+            .replace("selenium.webdriver.chrome.webdriver.","")
 
     return signature, return_annotation
+
+
+def process(signature):
+    args = ''
+    ret = ''
+    sig = re.match("(.*)(\s\->\s)(.*)", signature)
+
+    if sig:
+        if sig.group(1):
+            args = replace_signature(sig.group(1))
+
+        if sig.group(3):
+            ret = replace_signature(sig.group(3))
+
+        return "%s -> %s" % (args, ret)
+    else:
+        args = replace_signature(signature)
+
+        return args
+
+
+def replace_signature(args):
+    ret = ''
+    comma = ''
+    args_list = args.split(",")
+
+    for arg in args_list:
+        rep = re.sub("module\s'", "", arg)
+        rep = re.sub("'\sfrom\s.*\.py'", "", rep)
+
+        ret += comma + rep
+
+        if not comma:
+            comma = ','
+
+    return ret
