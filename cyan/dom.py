@@ -1,7 +1,11 @@
 """
+    ---------------------------------------------------------------------
+
     This module contains the functionality that related to DOM tree like:
-        # Finding DOM's elements.
-        # Checking the elements state (Present, visible,..etc.)
+        * Finding DOM's elements.
+        * Checking the elements state (Present, visible,..etc.)
+
+    ---------------------------------------------------------------------
 
 """
 
@@ -24,7 +28,8 @@ def get_browser() -> webdriver.chrome.webdriver.WebDriver:
     """
     Get the shared web driver.
 
-    :return: The web driver (WebDriver)
+    :return: The web driver
+    :rtype: WebDriver
     """
     return common.browser
 
@@ -50,7 +55,6 @@ def wait_presence_of_element(search_filter, timer: int=10, by: By=By.ID):
     """
     Wait for an element to be loaded on the page
 
-    :rtype : None
     :param search_filter: The element identifier to search by
     :param timer: time to wait before it through a timeout error
     :param by: element filter type
@@ -66,7 +70,6 @@ def wait_presence_of_element_by_text(element_text: string, timer: int=10):
     """
     Wait for an element to be loaded on the page
 
-    :rtype : None
     :param element_text: The element text to search by
     :param timer: time to wait before it through a timeout error
     """
@@ -79,6 +82,13 @@ def wait_presence_of_element_by_text(element_text: string, timer: int=10):
 
 
 def element_text_available_callback(element_text: string, element: string, by: By=By.ID):
+    """
+
+    :param element_text:
+    :param element:
+    :param by:
+    :return:
+    """
     security.check_self()
 
     el = get_element(element, by)

@@ -22,6 +22,7 @@ import shlex
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 # sys.path.insert(0, os.path.abspath('.'))
 import mock
+import re
 
 project_path = os.path.abspath('../..')
 sys.path.insert(0, project_path)
@@ -33,7 +34,7 @@ print(project_path)
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
-#needs_sphinx = '1.0'
+# needs_sphinx = '1.0'
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
@@ -307,7 +308,37 @@ def skip(app, what, name, obj, skip, options):
 
 def setup(app):
     app.connect("autodoc-skip-member", skip)
+    app.connect('autodoc-process-signature', autodoc_process_signature)
+
 
 MOCK_MODULES = ['pypyodbc']
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
+
+""" 2Remove """
+import sphinx_rtd_theme
+
+html_theme = 'sphinx_rtd_theme'
+
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
+
+def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
+    test = ''
+    # if signature and name == 'cyan.data.get_random_text':
+    # if signature and name == 'cyan.dom.element_text_available_callback':
+    if signature and name == 'cyan.dom.select_from_dropdown':
+        rep = signature
+        # re.sub(r"(module \').*(\'\sfrom\s\')", "", rep)
+        rep = re.sub(r"module\s\'", "", rep)
+        rep = re.sub(r"\' from \'.*\'", "", rep)
+        # re.sub(r"(module \').*(\' from \'\s)", "", rep)
+        print('rep = %s' % rep)
+        test = re.match(r"(\(.*\: \<)module \'(.*)\' from.*(.*\>\))", signature)
+        # print(test.group())
+
+    if test:
+        signature = '{0}{1}{2}'.format(test.group(1), test.group(2), test.group(3))
+        # print(signature)
+
+    return signature, return_annotation

@@ -36,14 +36,6 @@ cyan.nav
     :undoc-members:
     :show-inheritance:
 
-cyan.reusablefunctions
-----------------------
-
-.. automodule:: cyan.reusablefunctions
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 cyan.security
 -------------
 
