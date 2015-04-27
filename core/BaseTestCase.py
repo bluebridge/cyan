@@ -1,5 +1,5 @@
 import unittest
-from cyan import dom, nav
+from cyan.core import nav
 
 
 class BaseTestCase(unittest.TestCase):

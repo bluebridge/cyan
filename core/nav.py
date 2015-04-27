@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.remote.webelement import WebElement
 
-from cyan import input, security, common, dom
+from cyan.core import input, security, common, dom
 
 
 class MenuItem(object):

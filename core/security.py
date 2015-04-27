@@ -1,40 +1,49 @@
 from http.client import CannotSendRequest
 import os
-import unittest
-import os
-import socket
+import configparser
 
 from selenium.webdriver.support import expected_conditions as ec
-
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
-from cyan import common
+from cyan.core import common
 
-def init_class(driverpath=None, site=None):
 
-    #common.site_url = "http://" + socket.gethostname()          #For use in Brisbane
-    common.site_url = site or r"http://localhost/"       #For use in UK
-    #common.site_url = "http://ruthmac/cosacs/"                   #Ruth's computer
+def init_class(config_path: str=''):
+    config_file = config_path or get_config_path()
+    config = configparser.ConfigParser()
 
-    common.driver_path = driverpath or get_driver_path()
+    config.read(config_file)
+
+    site = config['SITE']['SiteUrl'] or r'http://localhost/'
+    driver_path = config['SITE']['DriverRelPath'] or r'\drivers\chromedriver.exe'
+
+    common.site_url = site
+    common.driver_path = get_driver_path(driver_path)
 
     common.browser = webdriver.Chrome(common.driver_path)
     common.browser.maximize_window()
-    # path = os.getcwd()
-    # sys.path.append(path)
-    # print(r"Current path:", path)
-    # print(r"Module path: ", os.path.abspath(inspect.getsourcefile(TestHelper)))
 
 
-def get_driver_path():
+def get_config_path():
+    dir_path = get_project_path()
+
+    return dir_path + r"\settings.ini"
+
+
+def get_driver_path(driver_name: str):
+    dir_path = get_project_path()
+
+    return dir_path + driver_name
+
+
+def get_project_path():
     path = os.path.abspath(__file__)
-    dir_path = os.path.dirname(path).replace('\cyan', '')
 
-    return dir_path + r"\drivers\chromedriver.exe"
+    return os.path.dirname(path).replace('\cyan\core', '')
 
 
 def check_self(check_logging: bool=True):
@@ -50,10 +59,8 @@ def check_self(check_logging: bool=True):
         if check_logging and is_logged() is False:
             login()
 
-    # checking = False
 
-
-def login(user=None, password=None):
+def login(user:str=None, password:str=None, config_path:str=''):
     """
     Log in into Cosacs application.
 
@@ -67,8 +74,16 @@ def login(user=None, password=None):
     if is_logged():
         return
     else:
-        u = user or r"user"
-        pw = password or r"password"
+        config_file = config_path or get_config_path()
+        config = configparser.ConfigParser()
+
+        config.read(config_file)
+
+        default_user = config['SITE']['User'] or r"user"
+        default_pw = config['SITE']['Pw'] or r"password"
+
+        u = user or default_user
+        pw = password or default_pw
 
         common.browser.get(common.site_url)
         __wait_element_presence("username", 20)
@@ -88,7 +103,6 @@ def login(user=None, password=None):
 
         __wait_element_presence("logoff", 40, By.ID)
         __wait_element_presence("Warranty", 10, By.LINK_TEXT)
-
 
 
 def logout():
@@ -141,7 +155,6 @@ def __wait_element_presence(search_filter, timer: int=30, by: By=By.ID):
     """
     Wait for an element to be loaded on the page.
 
-    :rtype : None
     :param search_filter: The element identifier to search by
     :param timer: time to wait before it through a timeout error
     :param by: element filter type
@@ -150,8 +163,9 @@ def __wait_element_presence(search_filter, timer: int=30, by: By=By.ID):
         ec.presence_of_element_located((by, search_filter))
     )
 
+
 def __sys_admin_page():
-        sysadmin_btn = common.browser.find_element(By.ID, r"profile")
-        __is_valid_element(sysadmin_btn)
-        sysadmin_btn.click()
+    sysadmin_btn = common.browser.find_element(By.ID, r"profile")
+    __is_valid_element(sysadmin_btn)
+    sysadmin_btn.click()
 

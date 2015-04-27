@@ -1,17 +1,13 @@
-# global site_url
-# global driver_path
-# global browser
-# global connection_string
-# global checking
 import datetime
 from enum import Enum
 
 site_url = r'http://localhost:88/'
+
 driver_path = r"drivers\chromedriver.exe"
-# connection_string = "Driver={SQL Server Native Client 10.0};Server=.;Database=cosacsTest;Trusted_Connection=yes;"
 connection_string = "Driver={SQL Server Native Client 11.0}; Server=.; Database=cosacs;Trusted_Connection=yes;"
 browser = None  # webdriver.Chrome(driver_path)
 checking = False
+
 """
 Non Stocks
 """

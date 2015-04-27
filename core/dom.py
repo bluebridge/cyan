@@ -21,7 +21,7 @@ from selenium.webdriver.remote.webelement import *
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 
-from cyan import security, common
+from cyan.core import security, common
 
 
 def get_browser() -> webdriver.chrome.webdriver.WebDriver:
