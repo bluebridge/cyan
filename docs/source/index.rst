@@ -11,7 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   cyan   
+   cyan
 
 
 Indices and tables
