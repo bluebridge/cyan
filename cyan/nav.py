@@ -43,17 +43,25 @@ def go(url: string):
 
 def multi_menu(menu_hierarchy: string, delimiter: string=","):
     """
-    Click on a navigation menu item (work on multi levels menu).
-
+    Click on a navigation menu item (work on multi levels menu)
     :param menu_hierarchy: The menu item hierarchy as string separated by delimiter
     :param delimiter: The delimiter that separate the menu items
     """
     security.check_self()
     items = menu_hierarchy.split(delimiter)
+    last_index = len(items)
+    index = 1
 
     for item in items:
-        input.click_element(item, By.LINK_TEXT)
+        ele = dom.get_element(item, By.LINK_TEXT)
 
+        if index == 1 or index == last_index:
+            ele.click()
+        else:
+            hover = ActionChains(common.browser).move_to_element(ele)
+            hover.perform()
+
+        index += 1
 
 def menu(parent_item: string, child_item: string):
     """
