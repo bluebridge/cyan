@@ -15,7 +15,7 @@ import string
 from faker import Faker
 import pypyodbc
 
-from cyan.core import common
+from core import common
 
 fake = Faker()
 
