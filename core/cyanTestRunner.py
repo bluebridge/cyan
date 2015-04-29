@@ -20,7 +20,7 @@ class CyanTestResult(TeamcityTestResult):
     def get_directory_structure(self, test) -> str:
         values = super(CyanTestResult, self).get_test_id(test).split(".")
 
-        return "./{0}/{1}".format(values[0], values[1])
+        return "./Screenshots/{0}/{1}".format(values[0], values[1])
 
 
 class CyanTestRunner(TeamcityTestRunner):
