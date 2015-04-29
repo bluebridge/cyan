@@ -15,7 +15,7 @@ import string
 from faker import Faker
 import pypyodbc
 
-from core import common
+from cyan.core import common
 
 fake = Faker()
 
@@ -39,7 +39,7 @@ def sql_select(sql: string) -> string:
     Fetch a record set from DB by executing a SQL statement
 
     :param sql: The SQL statement that contain the select
-    :return:
+    :return: string type
     """
     conn = pypyodbc.connect(common.connection_string)
     cur = conn.cursor()

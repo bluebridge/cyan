@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# cyan documentation build configuration file, created by
+# core documentation build configuration file, created by
 # sphinx-quickstart on Thu Apr 23 10:53:19 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -24,7 +24,7 @@ import shlex
 import mock
 import re
 
-project_path = os.path.abspath('../..')
+project_path = os.path.abspath('../../..')
 sys.path.insert(0, project_path)
 print(project_path)
 
@@ -58,7 +58,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'cyan'
+project = 'core'
 copyright = '2015, Blue Bridge'
 author = 'Blue Bridge'
 
@@ -234,7 +234,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'cyan.tex', 'cyan Documentation',
+    (master_doc, 'core.tex', 'core Documentation',
      'Blue Bridge', 'manual'),
 ]
 
@@ -264,7 +264,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'cyan', 'cyan Documentation',
+    (master_doc, 'core', 'core Documentation',
      [author], 1)
 ]
 
@@ -278,8 +278,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'cyan', 'cyan Documentation',
-     author, 'cyan', 'One line description of project.',
+    (master_doc, 'core', 'core Documentation',
+     author, 'core', 'One line description of project.',
      'Miscellaneous'),
 ]
 
@@ -316,11 +316,11 @@ for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
 """ 2Remove """
-# import sphinx_rtd_theme
-#
-# html_theme = 'sphinx_rtd_theme'
-#
-# html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+import sphinx_rtd_theme
+
+html_theme = 'sphinx_rtd_theme'
+
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 
 def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
