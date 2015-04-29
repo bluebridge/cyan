@@ -12,6 +12,7 @@ class MenuItem(object):
         self.url = url
         self.nodes = []
 
+
 def go_home():
     """
     Navigate to the Home page
@@ -48,20 +49,23 @@ def multi_menu(menu_hierarchy: string, delimiter: string=","):
     :param delimiter: The delimiter that separate the menu items
     """
     security.check_self()
+    dom.wait_presence_of_element("mainMenu")
     items = menu_hierarchy.split(delimiter)
     last_index = len(items)
     index = 1
 
     for item in items:
+        dom.wait_presence_of_element(item, 5, By.LINK_TEXT)
+        dom.wait(3)
         ele = dom.get_element(item, By.LINK_TEXT)
 
         if index == 1 or index == last_index:
             ele.click()
         else:
-            hover = ActionChains(common.browser).move_to_element(ele)
-            hover.perform()
+            input.hover_on_element(ele)
 
         index += 1
+
 
 def menu(parent_item: string, child_item: string):
     """
