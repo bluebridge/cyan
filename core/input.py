@@ -86,8 +86,7 @@ def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, a
     """
     security.check_self()
 
-    xpath = "//input[@%s='%s']" % (attr_name, attr_value)
-    text_box = dom.get_element(xpath, By.XPATH)
+    text_box = dom.get_element_by_attribute(attr_name, attr_value, 'input')
 
     assert (text_box is not None), "Cannot find textbox with attribute '%s' with value '%s'" % (attr_name, attr_value)
 

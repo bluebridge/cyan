@@ -383,6 +383,20 @@ def get_element_by_text(value: string, search_type: common.TextSearchType=common
         return None
 
 
+def get_element_by_attribute(attribute_name: str, attribute_value: str, element_tag: str='*') -> WebElement:
+    """
+    Get DOM element by its attribute.
+
+    :param attribute_name: Attribute name
+    :param attribute_value: Attribute value
+    :param element_tag: DOM element's tag
+    :return: The element
+    """
+
+    xpath = "//%s[@%s='%s']" % (element_tag, attribute_name, attribute_value)
+    return common.browser.find_elements_by_xpath(xpath)
+
+
 def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_prefix: str='ng') -> WebElement:
     """
     Get DOM element by its AngularJs model's binding.
@@ -390,11 +404,12 @@ def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_
     :param model_name: Angular model binding name
     :param element_tag: The element's html tag
     :param angular_prefix: angular html data prefix
+    :param element_tag: DOM element's tag
     :return: The element
     """
 
-    xpath = "//%s[@%s-model='%s']" % (element_tag, angular_prefix, model_name)
-    return common.browser.find_elements_by_xpath(xpath)
+    attr_name = "%s-model" % angular_prefix
+    return get_element_by_attribute(attr_name, model_name, element_tag)
 
 
 def get_elements(search_filter: string, by: By=By.ID):
