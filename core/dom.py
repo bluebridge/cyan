@@ -383,6 +383,20 @@ def get_element_by_text(value: string, search_type: common.TextSearchType=common
         return None
 
 
+def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_prefix: str='ng') -> WebElement:
+    """
+    Get DOM element by its AngularJs model's binding.
+
+    :param model_name: Angular model binding name
+    :param element_tag: The element's html tag
+    :param angular_prefix: angular html data prefix
+    :return: The element
+    """
+
+    xpath = "//%s[@%s-model='%s']" % (element_tag, angular_prefix, model_name)
+    return common.browser.find_elements_by_xpath(xpath)
+
+
 def get_elements(search_filter: string, by: By=By.ID):
     """
     Get all element by its identifier.
