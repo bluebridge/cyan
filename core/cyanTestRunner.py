@@ -17,7 +17,7 @@ class CyanTestResult(TeamcityTestResult):
 
         super(CyanTestResult, self).report_fail(test, fail_type, err)
 
-    def get_directory_structure(self, test: str) -> str:
+    def get_directory_structure(self, test) -> str:
         values = super(CyanTestResult, self).get_test_id(test).split(".")
 
         return "./{0}/{1}".format(values[0], values[1])
