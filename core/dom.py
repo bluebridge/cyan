@@ -556,18 +556,21 @@ def scroll_down_100():
 
 
 #
-def screenshot(testCaseName):
+def screen_shot(file_name: str, file_directory: str='./Screenshots'):
     """
-    takes a screenshot of the current webpage and saves it in a folder called Screenshots.
+    takes a screen-shot of the current web page and saves. If the specified folder don't exists, it will be created
 
-    :param testCaseName:
+    :param file_name: name of the file to be saved. The current time in the format YYYYMMDD_HHMMSS will be added as suffix to the file name
+    :param file_directory: destination folder
     """
-    screenshot_dir = './Screenshots'
-    if not os.path.exists(screenshot_dir):
-        os.makedirs(screenshot_dir)
-    now = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    filename = '%s/%s-%s.png' % (screenshot_dir, now, testCaseName)
-    common.browser.get_screenshot_as_file(filename)
+
+    file_directory = file_directory or './Screenshots'
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+
+    file_name = '%s-%s.png' % (datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), file_name)
+
+    common.browser.get_screenshot_as_file('%s/%s' % (file_directory, file_name))
 
 
 def scrollup(distance):
