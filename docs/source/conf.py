@@ -315,12 +315,12 @@ MOCK_MODULES = ['pypyodbc']
 for mod_name in MOCK_MODULES:
     sys.modules[mod_name] = mock.Mock()
 
-""" 2Remove """
-import sphinx_rtd_theme
-
-html_theme = 'sphinx_rtd_theme'
-
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+# """ 2Remove """
+# import sphinx_rtd_theme
+#
+# html_theme = 'sphinx_rtd_theme'
+#
+# html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 
 def autodoc_process_signature(app, what, name, obj, options, signature, return_annotation):
