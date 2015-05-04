@@ -9,7 +9,6 @@
 
 """
 
-import string
 from http.client import CannotSendRequest
 import datetime
 import time
@@ -34,7 +33,7 @@ def get_browser() -> webdriver.chrome.webdriver.WebDriver:
     return common.browser
 
 
-def wait_for_text_present(text_to_present: string, text_element: string, timer: int=30, by: By=By.ID):
+def wait_for_text_present(text_to_present: str, text_element: str, by: By=By.CSS_SELECTOR, timer: int=10):
     """
     Wait for a string literal to be present on the page.
 
@@ -45,13 +44,13 @@ def wait_for_text_present(text_to_present: string, text_element: string, timer: 
     """
     security.check_self()
 
-    wait_visibility_of_element(text_element, timer, by)
+    wait_visibility_of_element(text_element, by, timer)
 
     WebDriverWait(common.browser, timeout=10).until(
         element_text_available_callback(text_to_present, text_element, by))
 
 
-def wait_presence_of_element(search_filter, timer: int=10, by: By=By.ID):
+def wait_presence_of_element(search_filter, by: By=By.CSS_SELECTOR, timer: int=10):
     """
     Wait for an element to be loaded on the page
 
@@ -66,7 +65,7 @@ def wait_presence_of_element(search_filter, timer: int=10, by: By=By.ID):
     )
 
 
-def wait_presence_of_element_by_text(element_text: string, timer: int=10):
+def wait_presence_of_element_by_text(element_text: str, timer: int=10):
     """
     Wait for an element to be loaded on the page
 
@@ -81,7 +80,7 @@ def wait_presence_of_element_by_text(element_text: string, timer: int=10):
     )
 
 
-def element_text_available_callback(element_text: string, element: string, by: By=By.ID):
+def element_text_available_callback(element_text: str, element: str, by: By=By.CSS_SELECTOR):
     """
 
     :param element_text:
@@ -104,8 +103,8 @@ def element_text_available_callback(element_text: string, element: string, by: B
     return callback
 
 
-def wait_visibility_of_element(search_filter, timer: int=10, element_by: By=By.ID,
-                               msg: string='Waiting for element timed out'):
+def wait_visibility_of_element(search_filter, element_by: By=By.CSS_SELECTOR, timer: int=10,
+                               msg: str='Waiting for element timed out'):
     """
     Wait for an element to be loaded and become visible on the page.
 
@@ -118,8 +117,8 @@ def wait_visibility_of_element(search_filter, timer: int=10, element_by: By=By.I
         .until(lambda s: s.find_element(element_by, search_filter).is_displayed(), msg)
 
 
-def wait_visibility_of_element_by_text(element_text: string, timer: int=10,
-                                       msg: string='Waiting for element timed out'):
+def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
+                                       msg: str='Waiting for element timed out'):
     """
     Wait for an element to be loaded and become visible on the page.
 
@@ -134,7 +133,7 @@ def wait_visibility_of_element_by_text(element_text: string, timer: int=10,
         .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
 
 
-def is_element_present(search_filter, element_by: By=By.ID) -> bool:
+def is_element_present(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
     """
     Check the present of an element on the current page.
 
@@ -152,7 +151,7 @@ def is_element_present(search_filter, element_by: By=By.ID) -> bool:
         # assert 0, "can't find element: '%s' using its '%s'" % (search_filter, element_by)
 
 
-def is_element_visible(search_filter, element_by: By=By.ID) -> bool:
+def is_element_visible(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
     security.check_self()
 
     try:
@@ -164,7 +163,7 @@ def is_element_visible(search_filter, element_by: By=By.ID) -> bool:
         return False
 
 
-def is_element_visible_text(element_text: string) -> bool:
+def is_element_visible_text(element_text: str) -> bool:
     state = False
 
     try:
@@ -180,7 +179,7 @@ def is_element_visible_text(element_text: string) -> bool:
     return state
 
 
-def is_element_visible_attr(attr_name: string, attr_value: string, tag: string='input') -> bool:
+def is_element_visible_attr(attr_name: str, attr_value: str, tag: str='input') -> bool:
     state = False
     xpath = "//{0}[@{1}='{2}']".format(tag, attr_name, attr_value)
     ele = common.browser.find_elements_by_xpath(xpath)
@@ -201,7 +200,7 @@ def is_element_disabled(css):
     css += ' .disabled'
 
     try:
-        we = get_element(css, By.CSS_SELECTOR)
+        we = get_element(css)
         state = True
     except:
         state = False
@@ -209,7 +208,7 @@ def is_element_disabled(css):
     return state
 
 
-def is_element_selected(search_filter, element_by: By=By.ID) -> bool:
+def is_element_selected(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
     """
     To check if a tick box is selected.
 
@@ -228,7 +227,7 @@ def is_element_selected(search_filter, element_by: By=By.ID) -> bool:
         return False
 
 
-def is_element_enabled(search_filter, element_by: By=By.ID) -> bool:
+def is_element_enabled(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
     security.check_self()
 
     try:
@@ -240,45 +239,45 @@ def is_element_enabled(search_filter, element_by: By=By.ID) -> bool:
         return False
 
 
-def select_from_dropdown(xpath: string, selection: string):
+def select_from_dropdown(xpath: str, selection: str):
     dropdown = get_element(xpath, By.XPATH)
     dropdown.click()
     wait(0.5)
 
     css = "div.list-item:nth-child(" + selection + ")"  # Select the nth option from the drop down list
-    option = get_element(css, By.CSS_SELECTOR)
+    option = get_element(css)
     option.click()
     wait(0.5)
 
 
-def select_from_dropdown_search(css: string, selection: string):
+def select_from_dropdown_search(css: str, selection: str):
     css1 = css + ' .play'
-    we = get_elements(css1, By.CSS_SELECTOR)
+    we = get_elements(css1)
     we[0].click()  # Open up the entry box
 
     css2 = css + ' input'
     wait(1)
-    we = get_element(css2, By.CSS_SELECTOR)
+    we = get_element(css2)
     we.send_keys(Keys.CONTROL + "a")
     we.send_keys(selection)
 
     # Now click on the search result
     css3 = css + ' .list-options .list-item'
-    wait_presence_of_element(css3, 10, By.CSS_SELECTOR)
-    we = get_elements(css3, By.CSS_SELECTOR)
+    wait_presence_of_element(css3)
+    we = get_elements(css3)
     we[0].click()
 
 
-def get_Options_from_dropdown_search(css: string):
+def get_Options_from_dropdown_search(css: str):
     options = []
 
     css1 = css + ' .play'
-    wait_presence_of_element(css, 10, By.CSS_SELECTOR)
-    we = get_element(css1, By.CSS_SELECTOR)
+    wait_presence_of_element(css)
+    we = get_element(css1)
     we.click()  # Open up the entry box
 
     css = '.list-options .list-item'
-    we = get_elements(css, By.CSS_SELECTOR)
+    we = get_elements(css)
     count = len(we)
 
     for x in range(0, (count - 1)):
@@ -288,13 +287,13 @@ def get_Options_from_dropdown_search(css: string):
     return options
 
 
-def select_from_dropdown_CSS(css: string, selection: string):
-    dropdown = get_element(css, By.CSS_SELECTOR)
+def select_from_dropdown_CSS(css: str, selection: str):
+    dropdown = get_element(css)
     dropdown.click()
     wait(0.5)
 
     css = "div.list-item:nth-child(" + selection + ")"  # Select the nth option from the drop down list
-    option = get_element(css, By.CSS_SELECTOR)
+    option = get_element(css)
     option.click()
     wait(0.5)
 
@@ -306,19 +305,19 @@ def select_from_add(css, name):
     :param css:
     :param name:
     """
-    we = get_element(css, By.CSS_SELECTOR)
+    we = get_element(css)
     input = we.find_element(By.CSS_SELECTOR, 'input')
     input.send_keys(name)
     input.send_keys(Keys.ENTER)
 
     # Now click on the 'Add'
-    we = get_element(css, By.CSS_SELECTOR)
+    we = get_element(css)
     add = we.find_element(By.CSS_SELECTOR, 'button')
     add.click()
 
 
-def select_from_dropdown_no_search(css: string, selection: string):
-    dropdown = get_element(css, By.CSS_SELECTOR)
+def select_from_dropdown_no_search(css: str, selection: str):
+    dropdown = get_element(css)
 
     for option in dropdown.find_elements_by_tag_name('option'):
         if option.text == selection:
@@ -336,7 +335,7 @@ def validate_element(element: WebElement):
     assert (element.is_enabled()), "element is not enabled"
 
 
-def get_element(search_filter: string, by: By=By.ID) -> WebElement:
+def get_element(search_filter: str, by: By=By.CSS_SELECTOR) -> WebElement:
     """
     Get an element by its identifier.
 
@@ -349,7 +348,7 @@ def get_element(search_filter: string, by: By=By.ID) -> WebElement:
     return common.browser.find_element(by, search_filter)
 
 
-def get_element_by_value(value: string) -> WebElement:
+def get_element_by_value(value: str) -> WebElement:
     """
     Get DOM element by its value.
 
@@ -361,7 +360,7 @@ def get_element_by_value(value: string) -> WebElement:
     return common.browser.find_elements_by_xpath(xpath)
 
 
-def get_element_by_text(value: string, search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
+def get_element_by_text(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
     """
     Get DOM element by its text.
 
@@ -412,7 +411,7 @@ def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_
     return get_element_by_attribute(attr_name, model_name, element_tag)
 
 
-def get_elements(search_filter: string, by: By=By.ID):
+def get_elements(search_filter: str, by: By=By.CSS_SELECTOR):
     """
     Get all element by its identifier.
 
@@ -425,7 +424,7 @@ def get_elements(search_filter: string, by: By=By.ID):
     return common.browser.find_elements(by, search_filter)
 
 
-def get_label_by_partial_text(label_text: string) -> WebElement:
+def get_label_by_partial_text(label_text: str) -> WebElement:
     """
     Get a label by its partial text.
 
@@ -436,7 +435,7 @@ def get_label_by_partial_text(label_text: string) -> WebElement:
     return get_element(xpath, By.XPATH)
 
 
-def get_label_by_text(label_text: string) -> WebElement:
+def get_label_by_text(label_text: str) -> WebElement:
     """
     Get a label by its text.
 
@@ -447,7 +446,7 @@ def get_label_by_text(label_text: string) -> WebElement:
     return get_element(xpath, By.XPATH)
 
 
-def get_link_by_text(link_text: string) -> WebElement:
+def get_link_by_text(link_text: str) -> WebElement:
     """
     Get a link by its text.
 
@@ -538,7 +537,7 @@ def scroll_element_to_view_1(element_name):
     end = 200
     for permission_displayed in get_elements("table."
                                              "table:nth-child(n) > tbody:nth-child(2) > tr:nth-child(n) > "
-                                             "td:nth-child(1)", By.CSS_SELECTOR):
+                                             "td:nth-child(1)"):
         exp = permission_displayed.text
         if element_name in permission_displayed.text:
             wait(2)
@@ -621,26 +620,26 @@ def click_Calendar(dateToChangeTo):
 
 
     # Change year if appropriate
-    currentYear = get_element(calendarYearSelected, By.CSS_SELECTOR)
+    currentYear = get_element(calendarYearSelected)
     currentYear = currentYear.text
     if (currentYear != dateYear):
         yearToSelectLoc = calendarYearToSelect + str(dateYear) + '"]'
 
         # select the required year value
-        get_element(calendarYearOptions, By.CSS_SELECTOR).click()
-        get_element(yearToSelectLoc, By.CSS_SELECTOR).click()
+        get_element(calendarYearOptions).click()
+        get_element(yearToSelectLoc).click()
 
     # Change Month if appropriate
-    currentMonth = get_element(calendarMonthSelected, By.CSS_SELECTOR).text
+    currentMonth = get_element(calendarMonthSelected).text
     if (currentMonth != dateMonth):
         monthToSelectLoc = calendarMonthToSelect + str(selectingMonth) + '"]'
 
         # select the required month value
-        get_element(calendarMonthOptions, By.CSS_SELECTOR).click()
-        get_element(monthToSelectLoc, By.CSS_SELECTOR).click()
+        get_element(calendarMonthOptions).click()
+        get_element(monthToSelectLoc).click()
 
     # select the day
-    cDates = get_elements(calendarAllDates, By.CSS_SELECTOR)
+    cDates = get_elements(calendarAllDates)
     dateWebAddress = cDates[selectingDay]
     dateWebAddress.click()
 
@@ -678,26 +677,26 @@ def click_Calendar_djc(dateToChangeTo):
 
 
     # Change year if appropriate
-    currentYear = get_element(calendarYearSelected, By.CSS_SELECTOR)
+    currentYear = get_element(calendarYearSelected)
     currentYear = currentYear.text
     if (currentYear != dateYear):
         yearToSelectLoc = calendarYearToSelect + str(dateYear) + '"]'
 
         # select the required year value
-        get_element(calendarYearOptions, By.CSS_SELECTOR).click()
-        get_element(yearToSelectLoc, By.CSS_SELECTOR).click()
+        get_element(calendarYearOptions).click()
+        get_element(yearToSelectLoc).click()
 
     # Change Month if appropriate
-    currentMonth = get_element(calendarMonthSelected, By.CSS_SELECTOR).text
+    currentMonth = get_element(calendarMonthSelected).text
     if (currentMonth != dateMonth):
         monthToSelectLoc = calendarMonthToSelect + str(selectingMonth) + '"]'
 
         # select the required month value
-        get_element(calendarMonthOptions, By.CSS_SELECTOR).click()
-        get_element(monthToSelectLoc, By.CSS_SELECTOR).click()
+        get_element(calendarMonthOptions).click()
+        get_element(monthToSelectLoc).click()
 
     # select the day
-    cDates = get_elements(calendarAllDates, By.CSS_SELECTOR)
+    cDates = get_elements(calendarAllDates)
     count = len(cDates)
     if count < selectingDay:
         raise ValueError("Day not selectable")
@@ -746,7 +745,7 @@ def is_print_dialog_present(timeout: int=5) -> bool:
     ret = False
 
     try:
-        wait_visibility_of_element('print-preview', timeout, By.ID, 'Waiting for print dialog timed out')
+        wait_visibility_of_element('print-preview', By.ID, timeout, 'Waiting for print dialog timed out')
         ret = True
     except TimeoutException:
         pass

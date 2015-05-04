@@ -86,7 +86,7 @@ def login(user:str=None, password:str=None, config_path:str=''):
         pw = password or default_pw
 
         common.browser.get(common.site_url)
-        __wait_element_presence("username", 20)
+        __wait_element_presence("username",timer=20)
 
         username_txt = common.browser.find_element(By.ID, r"username")
         __is_valid_element(username_txt)
@@ -114,7 +114,7 @@ def logout():
     logoff_btn = common.browser.find_element(By.ID, r"logoff")
     __is_valid_element(logoff_btn)
     logoff_btn.click()
-    __wait_element_presence("username")
+    __wait_element_presence("#username")
 
 
 def is_logged():
@@ -151,7 +151,7 @@ def __is_all_windows_closed() -> bool:
             return True
 
 
-def __wait_element_presence(search_filter, timer: int=30, by: By=By.ID):
+def __wait_element_presence(search_filter, by: By=By.CSS_SELECTOR, timer: int=30):
     """
     Wait for an element to be loaded on the page.
 

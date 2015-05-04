@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 
 
-def write_on_textbox(text: string, search_filter: string, by: By=By.ID):
+def write_on_textbox(text: string, search_filter: string, by: By=By.CSS_SELECTOR):
     """
     Write on a textbox element.
 
@@ -138,11 +138,11 @@ def select2_set_value(grayed_text: string, value: string):
 
     all_visible[0].click()
     selector = ".select2-drop-active > div > input"
-    txt = dom.get_element(selector, By.CSS_SELECTOR)
+    txt = dom.get_element(selector)
     txt.send_keys(value)
     dom.wait(0.5)
     selector = ".select2-highlighted"
-    click_element(selector, By.CSS_SELECTOR)
+    click_element(selector)
 
 
 def select2_set_value_ex(grayed_text: string, value: string):
@@ -163,10 +163,10 @@ def select2_set_value_ex(grayed_text: string, value: string):
 
     all_visible[0].click()
     selector = "div.list-options.ng-scope > div > input"
-    txt = dom.get_element(selector, By.CSS_SELECTOR)
+    txt = dom.get_element(selector)
     txt.send_keys(value)
     selector = "div.list-options.ng-scope > div.list-item-container.ng-scope > div.list-item.ng-scope.ng-binding"
-    click_element(selector, By.CSS_SELECTOR)
+    click_element(selector)
 
 
 def set_select_value_by_text(place_holder_text: string, sel_text:string):
@@ -195,7 +195,7 @@ def set_value_by_text(ng_model: string, text: string):
     click_element(xpath, By.XPATH)
 
 
-def clear_textbox(textbox_filter: string, by: By=By.ID, submit: bool=False):
+def clear_textbox(textbox_filter: string, by: By=By.CSS_SELECTOR, submit: bool=True):
     security.check_self()
     textbox = dom.get_element(textbox_filter, by)
     dom.validate_element(textbox)
@@ -205,7 +205,7 @@ def clear_textbox(textbox_filter: string, by: By=By.ID, submit: bool=False):
         write_on_element(Keys.ENTER, textbox)
 
 
-def click_element(search_filter: string, by: By=By.ID):
+def click_element(search_filter: string, by: By=By.CSS_SELECTOR):
     """
     Click on element.
 
@@ -256,7 +256,7 @@ def close_notification():
         pass
 
 
-def focus_on_element(search_filter: string, by: By=By.ID):
+def focus_on_element(search_filter: string, by: By=By.CSS_SELECTOR):
     element = dom.get_element(search_filter, by)
     focus_on_element(element)
 
@@ -267,7 +267,7 @@ def focus_on_element(element_to_focus: WebElement):
 
 
 def radio_button_select_value(radio_button_tag: string):
-    dom.get_element("input[type='radio'][value='" + radio_button_tag + "']", By.CSS_SELECTOR).click()
+    dom.get_element("input[type='radio'][value='" + radio_button_tag + "']").click()
 
 
 def get_today_date():
@@ -311,19 +311,7 @@ def select_after_3days():
     click_on_element(dom.get_element(str(get_after_3days()), By.LINK_TEXT))
 
 
-def is_element_enabled(search_filter, element_by: By=By.ID) -> bool:
-    security.check_self()
-
-    try:
-        element = dom.get_element(search_filter, element_by)
-        return element.is_enabled()
-    except NoSuchElementException:
-        return False
-    except ConnectionRefusedError:
-        return False
-
-
-def get_element_attribute(search_filter: string, attribute: string, by: By=By.ID) -> string:
+def get_element_attribute(search_filter: string, attribute: string, by: By=By.CSS_SELECTOR) -> string:
     """
     Get an element's attribute value by its identifier.
 
@@ -338,7 +326,7 @@ def get_element_attribute(search_filter: string, attribute: string, by: By=By.ID
     return ele.get_attribute(attribute)
 
 
-def get_element_value(search_filter: string, by: By=By.ID) -> string:
+def get_element_value(search_filter: string, by: By=By.CSS_SELECTOR) -> string:
     """
     Get an element's value by its identifier.
 

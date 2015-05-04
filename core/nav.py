@@ -49,14 +49,14 @@ def multi_menu(menu_hierarchy: string, delimiter: string=","):
     :param delimiter: The delimiter that separate the menu items
     """
     security.check_self()
-    dom.wait_presence_of_element("mainMenu")
+    dom.wait_presence_of_element("mainMenu", By.ID)
     items = menu_hierarchy.split(delimiter)
     last_index = len(items)
     index = 1
 
     for item in items:
-        dom.wait_presence_of_element(item, 5, By.LINK_TEXT)
-        dom.wait(3)
+        dom.wait_presence_of_element(item, By.LINK_TEXT)
+
         ele = dom.get_element(item, By.LINK_TEXT)
 
         if index == 1 or index == last_index:
@@ -89,7 +89,7 @@ def cascade_menu(parent_item, nameHover_item, child_item):
     :return:
     """
     # confirm that nothing is selected
-    body = dom.get_element(".body", By.CSS_SELECTOR)
+    body = dom.get_element(".body")
     body.click()
 
     # get the items that contain more options within the dropdowns
@@ -98,7 +98,7 @@ def cascade_menu(parent_item, nameHover_item, child_item):
     parentCSS = '.nav-collapse.navbar-inverse-collapse .nav.navbar-nav li.dropdown a.dropdown-toggle'
 
     # Get the initial menu item
-    parentMenu = dom.get_elements(parentCSS, By.CSS_SELECTOR)
+    parentMenu = dom.get_elements(parentCSS)
     elementParent = parentMenu[0]
     for x in range(0, len(parentMenu)):
         word = parentMenu[x].text
@@ -107,7 +107,7 @@ def cascade_menu(parent_item, nameHover_item, child_item):
             break
 
     # Get the hover items
-    hover_item = dom.get_elements(CSSHover_item, By.CSS_SELECTOR)
+    hover_item = dom.get_elements(CSSHover_item)
     subMenu = hover_item[0]
     for x in range(0, len(hover_item)):
         word = hover_item[x]
@@ -118,7 +118,7 @@ def cascade_menu(parent_item, nameHover_item, child_item):
                 break
 
     # get the final click
-    allFinalItems = dom.get_elements(finalResult, By.CSS_SELECTOR)
+    allFinalItems = dom.get_elements(finalResult)
     elementChild = allFinalItems[0]
     expectedResult = child_item.replace(" ", "")
 
@@ -148,7 +148,7 @@ def menu_CSS(parent_item: string, child_item: string):
     :return:
     """
     # confirm that nothing is selected
-    body = dom.get_element(".body", By.CSS_SELECTOR)
+    body = dom.get_element(".body")
     body.click()
 
     # get the css for the menus
@@ -156,7 +156,7 @@ def menu_CSS(parent_item: string, child_item: string):
     childCSS = '.navbar-nav li.dropdown ul.dropdown-menu>li:not(.dropdown-submenu) a'
 
     # get the child
-    allFinalItems = dom.get_elements(childCSS, By.CSS_SELECTOR)
+    allFinalItems = dom.get_elements(childCSS)
     elementChild = allFinalItems[0]
     expectedResult = child_item.replace(" ", "")
 
@@ -170,7 +170,7 @@ def menu_CSS(parent_item: string, child_item: string):
             break
 
     # Get the 1st Item from the text
-    parentMenu = dom.get_elements(parentCSS, By.CSS_SELECTOR)
+    parentMenu = dom.get_elements(parentCSS)
     elementParent = parentMenu[0]
     for x in range(0, len(parentMenu)):
         word = parentMenu[x].text
@@ -194,7 +194,7 @@ def get_menu_options(parent_item: string):
     """
     menuItems = list()
     input.click_element(parent_item, by=By.LINK_TEXT)
-    children = dom.get_elements(".dropdown.open li", By.CSS_SELECTOR)
+    children = dom.get_elements(".dropdown.open li")
     length = len(children)
     for x in range(0, length):
         item = children[x].text
@@ -212,7 +212,7 @@ def get_all_menu_options(parent_item: string):
     """
     menuItems = list()
     input.click_element(parent_item, by=By.LINK_TEXT)
-    children = dom.get_elements('a[href^="/Merchandising"]', By.CSS_SELECTOR)
+    children = dom.get_elements('a[href^="/Merchandising"]')
 
     length = len(children)
     for x in range(0, length):
@@ -237,7 +237,7 @@ def quit_browser():
 
 def get_main_menu() -> list:
     menu_list = []
-    parent_menu = dom.get_elements("#mainMenu > li", By.CSS_SELECTOR)
+    parent_menu = dom.get_elements("#mainMenu > li")
 
     if not parent_menu:
         return menu_list
