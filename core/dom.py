@@ -133,7 +133,7 @@ def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
         .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
 
 
-def is_element_present(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_present(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
     """
     Check the present of an element on the current page.
 
@@ -151,7 +151,7 @@ def is_element_present(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
         # assert 0, "can't find element: '%s' using its '%s'" % (search_filter, element_by)
 
 
-def is_element_visible(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_visible(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
     security.check_self()
 
     try:
@@ -190,7 +190,7 @@ def is_element_visible_attr(attr_name: str, attr_value: str, tag: str='input') -
     return state
 
 
-def is_element_disabled(css):
+def is_element_disabled(css: str):
     """
     Checks if the element has the 'disabled' class attached to the element.
 
@@ -208,7 +208,7 @@ def is_element_disabled(css):
     return state
 
 
-def is_element_selected(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_selected(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
     """
     To check if a tick box is selected.
 
@@ -227,7 +227,7 @@ def is_element_selected(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
         return False
 
 
-def is_element_enabled(search_filter, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_enabled(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
     security.check_self()
 
     try:
@@ -298,7 +298,7 @@ def select_from_dropdown_CSS(css: str, selection: str):
     wait(0.5)
 
 
-def select_from_add(css, name):
+def select_from_add(css: str, name: str):
     """
     Enter the 'name' in the search text box then click on 'Enter' to select
 
@@ -475,7 +475,7 @@ def all_windows_closed() -> bool:
             return True
 
 
-def wait(timer):
+def wait(timer: int):
     time.sleep(timer)
 
 

@@ -86,7 +86,7 @@ def login(user:str=None, password:str=None, config_path:str=''):
         pw = password or default_pw
 
         common.browser.get(common.site_url)
-        __wait_element_presence("username",timer=20)
+        __wait_element_presence("#username")
 
         username_txt = common.browser.find_element(By.ID, r"username")
         __is_valid_element(username_txt)
@@ -101,8 +101,8 @@ def login(user:str=None, password:str=None, config_path:str=''):
         __is_valid_element(login_btn)
         login_btn.click()
 
-        __wait_element_presence("logoff", 40, By.ID)
-        __wait_element_presence("Warranty", 10, By.LINK_TEXT)
+        __wait_element_presence("logoff", By.ID, 40)
+        __wait_element_presence("Warranty", By.LINK_TEXT, 10)
 
 
 def logout():
