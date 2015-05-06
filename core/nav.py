@@ -224,7 +224,18 @@ def get_all_menu_options(parent_item: string):
     return menuItems
 
 
+def logout_quit_browser():
+    """
+    Closes the current session by logging out and close the browser
+    """
+    security.logout()
+    quit_browser()
+
+
 def quit_browser():
+    """
+    Close the browser window
+    """
     # global browser
     # global checking
 
