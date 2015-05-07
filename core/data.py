@@ -15,7 +15,7 @@ import string
 from faker import Faker
 import pypyodbc
 
-from cyan.core import common
+from cyan.core import common, security
 
 fake = Faker()
 
@@ -26,6 +26,7 @@ def sql_execute(sql: string):
 
     :param sql: The SQL statement to be executed.
     """
+    security.check_self()
     conn = pypyodbc.connect(common.connection_string)
     cur = conn.cursor()
     cur.execute(sql)
@@ -41,6 +42,8 @@ def sql_select(sql: string) -> string:
     :param sql: The SQL statement that contain the select
     :return: string type
     """
+    security.check_self()
+
     conn = pypyodbc.connect(common.connection_string)
     cur = conn.cursor()
     cur.execute(sql)
@@ -57,6 +60,8 @@ def sql_execute_file(path: string):
 
     :param path: The path the file that contains the sql statement/s
     """
+    security.check_self()
+
     f = open(path, 'r')
 
     sql = f.read()
