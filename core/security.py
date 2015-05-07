@@ -19,10 +19,13 @@ def init_class(config_path: str=''):
     config.read(config_file)
 
     site = config['SITE']['SiteUrl'] or r'http://localhost/'
+    connection_string = config['SITE']['ConnectionString'] or r"Driver={SQL Server Native Client 11.0}; " \
+                                                              "Server=.; Database=cosacs;uid=sa;pwd=;"
     driver_path = config['SITE']['DriverRelPath'] or r'\drivers\chromedriver.exe'
 
     common.site_url = site
     common.driver_path = get_driver_path(driver_path)
+    common.connection_string = connection_string
 
     common.browser = webdriver.Chrome(common.driver_path)
     common.browser.maximize_window()
