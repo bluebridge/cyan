@@ -360,7 +360,7 @@ def get_element_by_value(value: str) -> WebElement:
     return common.browser.find_elements_by_xpath(xpath)
 
 
-def get_element_by_text(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
+def get_element_by_text(value: str,tag: str='*', search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
     """
     Get DOM element by its text.
 
@@ -368,12 +368,12 @@ def get_element_by_text(value: str, search_type: common.TextSearchType=common.Te
     :param search_type:
     :return:
     """
-    options = {1: "//*[normalize-space(text())='%s']",
-               2: "//*[starts-with(text(), '%s')]",
-               3: "//*[ends-with(text(), '%s')]",
-               4: "//*[contains(text(), '%s')]"
+    options = {1: "//%s[normalize-space(text())='%s']",
+               2: "//%s[starts-with(text(), '%s')]",
+               3: "//%s[ends-with(text(), '%s')]",
+               4: "//%s[contains(text(), '%s')]"
                }
-    xpath = options[search_type.value] % value
+    xpath = options[search_type.value] % (tag, value)
     ele = get_element(xpath, By.XPATH)
 
     if ele:

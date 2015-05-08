@@ -34,7 +34,7 @@ def write_on_element(text: string, element: WebElement):
     element.send_keys(text)
 
 
-def click_button(button_text: string):
+def click_button(button_text: string, tag: str='button'):
     """
     Click on a button by its display text.
 
@@ -42,7 +42,7 @@ def click_button(button_text: string):
     """
     security.check_self()
 
-    element = dom.get_element_by_text(button_text)
+    element = dom.get_element_by_text(button_text, tag)
     click_on_element(element)
 
 
