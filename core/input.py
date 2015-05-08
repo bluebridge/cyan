@@ -169,6 +169,18 @@ def select2_set_value_ex(grayed_text: string, value: string):
     click_element(selector)
 
 
+def select_set_value(value: str):
+    """
+    Select a value from a drop down list by passing the string text of that value
+    :param value:
+    """
+    security.check_self()
+
+    xpath = "//option[contains(text(), '%s')]" % value
+    option_item = dom.get_element(xpath, By.XPATH)
+    option_item.click()
+
+
 def set_select_value_by_text(place_holder_text: string, sel_text:string):
     xpath = "//list[@placeholder='%s']" % place_holder_text
     lst = dom.get_element(xpath, By.XPATH)
