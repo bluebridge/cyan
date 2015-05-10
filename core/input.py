@@ -1,7 +1,7 @@
 import string
 import datetime
 
-from cyan.core import dom, security, common
+from ..core import dom, security, common
 
 from selenium.webdriver import ActionChains
 

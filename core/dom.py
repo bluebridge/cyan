@@ -19,8 +19,10 @@ from selenium.common.exceptions import *
 from selenium.webdriver.remote.webelement import *
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
+import sys
 
-from cyan.core import security, common
+sys.path.append("../..")
+from ..core import security, common
 
 
 def get_browser() -> webdriver.chrome.webdriver.WebDriver:
