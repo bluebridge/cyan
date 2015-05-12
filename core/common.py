@@ -1,4 +1,3 @@
-import datetime
 from enum import Enum
 
 site_url = r'http://localhost:88/'
