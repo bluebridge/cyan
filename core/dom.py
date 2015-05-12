@@ -393,7 +393,7 @@ def get_element_by_attribute(attribute_name: str, attribute_value: str, element_
     """
 
     xpath = "//%s[@%s='%s']" % (element_tag, attribute_name, attribute_value)
-    return common.browser.find_elements_by_xpath(xpath)
+    return common.browser.find_element_by_xpath(xpath)
 
 
 def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_prefix: str='ng') -> WebElement:

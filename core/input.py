@@ -8,6 +8,14 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.remote.webelement import *
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
+from cyan.core.common import ListFilterType
+
+
+ListCssFilters = {1: "list#%s']",
+                  2: "list[ng-model='%s']",
+                  3: "list[lookup='%s']",
+                  4: "list[placeholder='%s']"
+                  }
 
 
 def write_on_textbox(text: string, search_filter: string, by: By=By.CSS_SELECTOR):
@@ -179,6 +187,25 @@ def select_set_value(value: str):
     xpath = "//option[contains(text(), '%s')]" % value
     option_item = dom.get_element(xpath, By.XPATH)
     option_item.click()
+
+
+def set_list_value(value: str, list_filter: str, filter_type: ListFilterType=ListFilterType.NgModel):
+    """
+    Select a list item of the 'list' drop-down directive by the passed value
+    :param value: The list item value to select
+    :param list_filter: The 'list' directive filter value
+    :param filter_type: Type of the list filter
+    """
+    css = ListCssFilters[filter_type.value] % list_filter
+    ele = dom.get_element(css)
+
+    if ele:
+        arrow_btn = ele.find_element_by_class_name('list-arrow')
+        arrow_btn.click()
+
+        xpath = "//div[contains(text(), '%s')]" % value
+        list_item = ele.find_element_by_xpath(xpath)
+        list_item.click()
 
 
 def set_select_value_by_text(place_holder_text: string, sel_text:string):

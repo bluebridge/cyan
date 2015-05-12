@@ -16,13 +16,8 @@ class TextSearchType(Enum):
     Contain = 4
 
 
-
-    # def __ini_module__():
-    #     global site_url
-    #     global driver_path
-    #     global connection_string
-    #     global browser
-    #     global checking
-    #
-    #
-    # __ini_module__()
+class ListFilterType(Enum):
+    Id = 1
+    NgModel = 2
+    Lookup = 3
+    PlaceHolder = 4
