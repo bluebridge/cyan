@@ -135,6 +135,27 @@ def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
         .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
 
 
+def wait_visibility_of_ng_element(model_name: str, timer: int=10, element_tag: str='*', angular_prefix: str='ng',
+                                  msg: str='Waiting for element timed out'):
+    """
+    Wait for an element to be loaded and become visible on the page.
+
+    :param model_name: Angular model binding name
+    :param element_tag: The element's html tag
+    :param angular_prefix: angular html data prefix
+    :param element_tag: DOM element's tag
+    :param timer: time to wait before it through a timeout error
+    :param msg: Message to fire when timeout error thrown
+    """
+    security.check_self()
+
+    attr_name = "%s-model" % angular_prefix
+    xpath = "//%s[@%s='%s']" % (element_tag, attr_name, model_name)
+
+    WebDriverWait(common.browser, timer) \
+        .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
+
+
 def is_element_present(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
     """
     Check the present of an element on the current page.
@@ -362,7 +383,8 @@ def get_element_by_value(value: str) -> WebElement:
     return common.browser.find_elements_by_xpath(xpath)
 
 
-def get_element_by_text(value: str,tag: str='*', search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
+def get_element_by_text(value: str, tag: str='*',
+                        search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
     """
     Get DOM element by its text.
 

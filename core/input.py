@@ -28,8 +28,21 @@ def write_on_textbox(text: string, search_filter: string, by: By=By.CSS_SELECTOR
     """
     security.check_self()
     element = dom.get_element(search_filter, by)
-    dom.validate_element(element)
-    element.send_keys(text)
+    write_on_element(text, element)
+
+def write_on_ng_textbox(text: str, model_name: str, element_tag: str='*', angular_prefix: str='ng'):
+    """
+    Write on a textbox element using Angular model name.
+
+    :param text: The text to write
+    :param model_name: Angular model binding name
+    :param element_tag: The element's html tag
+    :param angular_prefix: angular html data prefix
+    :param element_tag: DOM element's tag
+    """
+    security.check_self()
+    element = dom.get_element_by_angular_model(model_name, element_tag, angular_prefix)
+    write_on_element(text, element)
 
 
 def write_on_element(text: string, element: WebElement):
