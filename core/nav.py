@@ -55,6 +55,7 @@ def multi_menu(menu_hierarchy: string, delimiter: string=","):
     index = 1
 
     for item in items:
+        item = item.strip()
         dom.wait_presence_of_element(item, By.LINK_TEXT)
 
         ele = dom.get_element(item, By.LINK_TEXT)
