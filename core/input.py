@@ -30,6 +30,7 @@ def write_on_textbox(text: string, search_filter: string, by: By=By.CSS_SELECTOR
     element = dom.get_element(search_filter, by)
     write_on_element(text, element)
 
+
 def write_on_ng_textbox(text: str, model_name: str, element_tag: str='*', angular_prefix: str='ng'):
     """
     Write on a textbox element using Angular model name.
@@ -78,7 +79,8 @@ def click_button_by_id(button_id: string):
     click_on_element(element)
 
 
-def fill_textbox_by_label_text(label_text, value_for_textbox):
+def fill_textbox_by_label_text(label_text, value_for_textbox,
+                               search_type: common.TextSearchType=common.TextSearchType.Exact):
     """
     Write to  a textbox by its label text.
 
@@ -86,9 +88,9 @@ def fill_textbox_by_label_text(label_text, value_for_textbox):
     :param value_for_textbox: The text to write
     """
     security.check_self()
-    # xpath = "//label[contains(.,'%s')]" % label_text
-    # label = dom.get_element(xpath, By.XPATH)
-    xpath = "//input[@id=(//label[normalize-space(text())='%s']/@for)]" % label_text
+
+    # //input[@id=(//label[normalize-space(text())='%s']/@for)]
+    xpath = common.get_attr_xpath("//input[@id=(//label", "text()", label_text, search_type, "/@for)]")
 
     text_box = dom.get_element(xpath, By.XPATH)
 
@@ -190,19 +192,20 @@ def select2_set_value_ex(grayed_text: string, value: string):
     click_element(selector)
 
 
-def select_set_value(value: str):
+def select_set_value(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Select a value from a drop down list by passing the string text of that value
     :param value:
     """
     security.check_self()
 
-    xpath = "//option[contains(text(), '%s')]" % value
+    xpath = common.get_attr_xpath("//option", "text()", value, search_type)
     option_item = dom.get_element(xpath, By.XPATH)
     option_item.click()
 
 
-def set_list_value(value: str, list_filter: str, filter_type: ListFilterType=ListFilterType.NgModel):
+def set_list_value(value: str, list_filter: str, filter_type: ListFilterType=ListFilterType.NgModel,
+                   search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Select a list item of the 'list' drop-down directive by the passed value
     :param value: The list item value to select
@@ -216,7 +219,7 @@ def set_list_value(value: str, list_filter: str, filter_type: ListFilterType=Lis
         arrow_btn = ele.find_element_by_class_name('list-arrow')
         arrow_btn.click()
 
-        xpath = "//div[contains(text(), '%s')]" % value
+        xpath = common.get_attr_xpath("//div", "text()", value)
         list_item = ele.find_element_by_xpath(xpath)
         list_item.click()
 

@@ -67,7 +67,8 @@ def wait_presence_of_element(search_filter, by: By=By.CSS_SELECTOR, timer: int=1
     )
 
 
-def wait_presence_of_element_by_text(element_text: str, timer: int=10):
+def wait_presence_of_element_by_text(element_text: str, timer: int=10,
+                                     search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Wait for an element to be loaded on the page
 
@@ -76,7 +77,8 @@ def wait_presence_of_element_by_text(element_text: str, timer: int=10):
     """
     security.check_self()
 
-    xpath = "//.[contains(text(), '%s')]" % element_text
+    xpath = common.get_attr_xpath("//.", "text()", element_text, search_type)
+
     WebDriverWait(common.browser, timeout=timer).until(
         ec.presence_of_element_located((By.XPATH, xpath))
     )
@@ -120,7 +122,8 @@ def wait_visibility_of_element(search_filter, element_by: By=By.CSS_SELECTOR, ti
 
 
 def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
-                                       msg: str='Waiting for element timed out'):
+                                       msg: str='Waiting for element timed out',
+                                       search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Wait for an element to be loaded and become visible on the page.
 
@@ -129,7 +132,7 @@ def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
     :param msg: Message to fire when timeout error thrown
     """
     security.check_self()
-    xpath = "//.[contains(text(), '%s')]" % element_text
+    xpath = common.get_attr_xpath("//.", "text()", element_text, search_type)
 
     WebDriverWait(common.browser, timer) \
         .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
@@ -371,7 +374,7 @@ def get_element(search_filter: str, by: By=By.CSS_SELECTOR) -> WebElement:
     return common.browser.find_element(by, search_filter)
 
 
-def get_element_by_value(value: str) -> WebElement:
+def get_element_by_value(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
     """
     Get DOM element by its value.
 
@@ -379,7 +382,10 @@ def get_element_by_value(value: str) -> WebElement:
     :return: The element
     """
 
-    xpath = "//*[contains(value(), '%s')]" % value
+    security.check_self()
+
+    xpath = common.get_attr_xpath("//*", "value()", value, search_type)
+
     return common.browser.find_elements_by_xpath(xpath)
 
 
@@ -392,12 +398,12 @@ def get_element_by_text(value: str, tag: str='*',
     :param search_type:
     :return:
     """
-    options = {1: "//%s[normalize-space(text())='%s']",
-               2: "//%s[starts-with(text(), '%s')]",
-               3: "//%s[ends-with(text(), '%s')]",
-               4: "//%s[contains(text(), '%s')]"
-               }
-    xpath = options[search_type.value] % (tag, value)
+
+    security.check_self()
+
+    prefix = "//%s" % tag
+
+    xpath = common.get_attr_xpath(prefix, 'text()', value, search_type)
     ele = get_element(xpath, By.XPATH)
 
     if ele:
@@ -406,7 +412,8 @@ def get_element_by_text(value: str, tag: str='*',
         return None
 
 
-def get_element_by_attribute(attribute_name: str, attribute_value: str, element_tag: str='*') -> WebElement:
+def get_element_by_attribute(attribute_name: str, attribute_value: str, element_tag: str='*',
+                             search_type: common.TextSearchType=common.TextSearchType.Exact) -> WebElement:
     """
     Get DOM element by its attribute.
 
@@ -416,7 +423,12 @@ def get_element_by_attribute(attribute_name: str, attribute_value: str, element_
     :return: The element
     """
 
-    xpath = "//%s[@%s='%s']" % (element_tag, attribute_name, attribute_value)
+    security.check_self()
+
+    prefix = "//%s" % element_tag
+
+    xpath = common.get_attr_xpath(prefix, attribute_name, attribute_value, search_type)
+
     return common.browser.find_element_by_xpath(xpath)
 
 
@@ -455,18 +467,21 @@ def get_label_by_partial_text(label_text: str) -> WebElement:
     :param label_text: label's partial text
     :return: The found label as WebElement
     """
-    xpath = "//label[contains(.,'%s')]/.." % label_text
-    return get_element(xpath, By.XPATH)
+
+    return get_label_by_text(label_text, common.TextSearchType.Contain)
 
 
-def get_label_by_text(label_text: str) -> WebElement:
+def get_label_by_text(label_text: str, search_type: common.TextSearchType=common.TextSearchType.Exact) -> WebElement:
     """
     Get a label by its text.
 
     :param label_text: label's text
     :return: The found label as WebElement
     """
-    xpath = "//label[normalize-space(text())= '%s']" % label_text
+
+    security.check_self()
+
+    xpath = common.get_attr_xpath("//label", "text()", label_text, search_type)
     return get_element(xpath, By.XPATH)
 
 
