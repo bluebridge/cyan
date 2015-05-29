@@ -176,7 +176,7 @@ def select2_set_value_ex(grayed_text: string, value: string):
     """
     security.check_self()
 
-    selector = "//span[contains(.,'{0}')]/..".format(grayed_text)
+    selector = "//div[contains(concat(' ',normalize-space(@class),' '),' list-placeholder ')]/span[text()='{0}']/..".format(grayed_text)
     all_elements = dom.get_elements(selector, By.XPATH)
 
     all_visible = list(filter(lambda i: i.is_displayed(), all_elements))
