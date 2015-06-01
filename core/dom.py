@@ -216,7 +216,7 @@ def is_element_visible_attr(attr_name: str, attr_value: str, tag: str='input') -
     return state
 
 
-def is_element_disabled(css: str):
+def is_element_disabled(css: str)-> bool:
     """
     Checks if the element has the 'disabled' class attached to the element.
 
@@ -226,12 +226,12 @@ def is_element_disabled(css: str):
     css += ' .disabled'
 
     try:
-        we = get_element(css)
-        state = True
-    except:
-        state = False
 
-    return state
+        return get_element(css) is not None
+    except:
+        return False
+
+    return False
 
 
 def is_element_selected(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
@@ -533,67 +533,29 @@ def scroll_to_bottom():
 
 
 def scroll_down():
+    """
+    scroll to the bottom of the page
+    """
     security.check_self()
     common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
 
-def scrolldown():
+def scroll_down_by(distance: int):
     security.check_self()
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    common.browser.execute_script("window.scrollBy(0, {value})".format(value=distance))
 
 
-def scrolldownOne():
+def scroll_up(distance):
     security.check_self()
-    common.browser.execute_script("window.scrollBy(0,7800)", "")
+    text = "window.scrollBy(0,-" + distance + ")"
+    common.browser.execute_script(text, "")
 
 
-def scroll_element_to_view_1(element_name):
-    start = 0
-    end = 200
-    for permission_displayed in get_elements("table."
-                                             "table:nth-child(n) > tbody:nth-child(2) > tr:nth-child(n) > "
-                                             "td:nth-child(1)"):
-        exp = permission_displayed.text
-        if element_name in permission_displayed.text:
-            wait(2)
-            break
-        else:
-            security.check_self()
-            common.browser.execute_script("scroll(%s, %s);" % (start, end))
-            start = end
-            end += 48
+def scroll_element_into_view(elementWe):
+    y = elementWe.location['y'] - 50
+    common.browser.execute_script('window.scrollTo(0, {0})'.format(y))
+    wait(0.5)
 
-
-def scroll_down_100():
-    security.check_self()
-    common.browser.execute_script("window.scrollBy(0, 100)")
-
-
-#
 def screen_shot(file_name: str, file_directory: str='./Screenshots'):
     """
     takes a screen-shot of the current web page and saves. If the specified folder don't exists, it will be created
@@ -609,18 +571,6 @@ def screen_shot(file_name: str, file_directory: str='./Screenshots'):
     file_name = '%s-%s.png' % (datetime.datetime.now().strftime('%Y%m%d_%H%M%S'), file_name)
 
     common.browser.get_screenshot_as_file('%s/%s' % (file_directory, file_name))
-
-
-def scrollup(distance):
-    security.check_self()
-    text = "window.scrollBy(0,-" + distance + ")"
-    common.browser.execute_script(text, "")
-
-
-def scroll_element_into_view(elementWe):
-    y = elementWe.location['y'] - 50
-    common.browser.execute_script('window.scrollTo(0, {0})'.format(y))
-    wait(0.5)
 
 
 def click_Calendar(dateToChangeTo):
@@ -683,97 +633,6 @@ def click_Calendar(dateToChangeTo):
     dateWebAddress.click()
 
     return dateWebAddress
-
-
-# small modification on the module above to throw an exception if the date specified is not settable
-def click_Calendar_djc(dateToChangeTo):
-    # variables
-    # Year
-    calendarYearSelected = '.ui-datepicker-year [selected="selected"]'
-    calendarYearToSelect = '.ui-datepicker-year [value="'  # requires year to select and "]
-    calendarYearOptions = '.ui-datepicker-year'
-    # month
-    calendarMonthSelected = '.ui-datepicker-month [selected="selected"]'
-    calendarMonthOptions = '[class="ui-datepicker-month"]'
-    calendarMonthToSelect = '[class="ui-datepicker-month"] [value="'  # requires month to select and "]
-    # day
-    calendarAllDates = 'td:not(.ui-state-disabled) .ui-state-default'  # Will only return enabled days
-
-
-    # separate the date
-    dateX = datetime.datetime.strptime(dateToChangeTo, '%a %d %B, %Y')
-
-    dateYear = dateX.strftime('%Y')
-    dateMonth = dateX.strftime('%b')
-    dateDay = dateX.strftime('%d')
-
-    # get Month Values for array to click
-    selectingMonth = dateX.strftime('%m')
-    selectingMonth = int(selectingMonth) - 1
-
-    # get Day Value for array to click
-    selectingDay = int(dateDay) - 1
-
-
-    # Change year if appropriate
-    currentYear = get_element(calendarYearSelected)
-    currentYear = currentYear.text
-    if (currentYear != dateYear):
-        yearToSelectLoc = calendarYearToSelect + str(dateYear) + '"]'
-
-        # select the required year value
-        get_element(calendarYearOptions).click()
-        get_element(yearToSelectLoc).click()
-
-    # Change Month if appropriate
-    currentMonth = get_element(calendarMonthSelected).text
-    if (currentMonth != dateMonth):
-        monthToSelectLoc = calendarMonthToSelect + str(selectingMonth) + '"]'
-
-        # select the required month value
-        get_element(calendarMonthOptions).click()
-        get_element(monthToSelectLoc).click()
-
-    # select the day
-    cDates = get_elements(calendarAllDates)
-    count = len(cDates)
-    if count < selectingDay:
-        raise ValueError("Day not selectable")
-    else:
-        dateWebAddress = cDates[selectingDay]
-        dateWebAddress.click()
-
-        return dateWebAddress
-
-
-def list_compare(list1, list2):
-    """
-    Compare the two lists nd return True if they are the same otherwise return False.
-
-    :param list1:
-    :param list2:
-    :return:
-    """
-    count1 = len(list1)
-    count2 = len(list2)
-    result = True
-    if count1 != count2:
-        result = False
-    else:
-        x = []  # Convert list1 to uppercase
-        for a in list1:
-            x.append(a.upper())
-        x.sort()
-        y = []  # Convert list2 to uppercase
-        for a in list1:
-            y.append(a.upper())
-        y.sort()
-        if x == y:  # See if they are the same
-            result = True
-        else:
-            result = False
-
-    return result
 
 
 def send_browser_key(key: Keys):

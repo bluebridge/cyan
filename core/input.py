@@ -229,11 +229,9 @@ def set_select_value_by_text(place_holder_text: string, sel_text:string):
     lst = dom.get_element(xpath, By.XPATH)
 
     if lst:
-        print(lst)
         xpath = "//div[contains(text(), '%s')]" % sel_text
         list_item = lst.find_element_by_xpath(xpath)
         if list_item:
-            print(list_item)
             list_item.click()
 
     else:
@@ -325,45 +323,8 @@ def radio_button_select_value(radio_button_tag: string):
     dom.get_element("input[type='radio'][value='" + radio_button_tag + "']").click()
 
 
-def get_today_date():
-    d = datetime.date.today()
-    return d.day
-
-
-def get_after_days(days: int):
-    d = datetime.date.today() + datetime.timedelta(days=days)
-    return d.day
-
-
-def get_tomorrow_date():
-    d = datetime.date.today() + datetime.timedelta(days=1)
-    return d.day
-
-
-def select_today_date():
-    click_on_element(dom.get_element(str(get_today_date()), By.LINK_TEXT))
-
-
-def select_tomorrow_date():
-    click_on_element(dom.get_element(str(get_tomorrow_date()), By.LINK_TEXT))
-
-
-def get_day_after_tomorrow():
-    d = datetime.date.today() + datetime.timedelta(days=2)
-    return d.day
-
-
-def select_day_after_tomorrow_date():
-    click_on_element(dom.get_element(str(get_day_after_tomorrow()), By.LINK_TEXT))
-
-
-def get_after_3days():
-    d = datetime.date.today() + datetime.timedelta(days=3)
-    return d.day
-
-
-def select_after_3days():
-    click_on_element(dom.get_element(str(get_after_3days()), By.LINK_TEXT))
+def add_days(days: int):
+    datetime.date.today() + datetime.timedelta(days=days).d.day
 
 
 def get_element_attribute(search_filter: string, attribute: string, by: By=By.CSS_SELECTOR) -> string:

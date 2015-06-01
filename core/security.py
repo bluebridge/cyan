@@ -63,7 +63,7 @@ def check_self(check_logging: bool=True):
             login()
 
 
-def login(user:str=None, password:str=None, config_path:str=''):
+def login(user: str=None, password: str=None, config_path: str=''):
     """
     Log in into Cosacs application.
 
