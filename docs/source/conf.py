@@ -26,6 +26,8 @@ import re
 
 project_path = os.path.abspath('../../..')
 sys.path.insert(0, project_path)
+project_path = os.path.abspath('../..')
+sys.path.insert(0, project_path)
 print(project_path)
 
 # List of patterns, relative to source directory, that match files and
