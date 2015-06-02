@@ -1,7 +1,7 @@
 import string
 import datetime
 
-from ..core import dom, security, common
+from cyan.core import dom, security, common
 
 from selenium.webdriver import ActionChains
 
@@ -9,7 +9,6 @@ from selenium.webdriver.remote.webelement import *
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from cyan.core.common import ListFilterType
-
 
 ListCssFilters = {1: "list#%s']",
                   2: "list[ng-model='%s']",
@@ -176,7 +175,8 @@ def select2_set_value_ex(grayed_text: string, value: string):
     """
     security.check_self()
 
-    selector = "//div[contains(concat(' ',normalize-space(@class),' '),' list-placeholder ')]/span[text()='{0}']/..".format(grayed_text)
+    selector = "//div[contains(concat(' ',normalize-space(@class),' '),' list-placeholder ')]/span[text()='{0}']/..".format(
+        grayed_text)
     all_elements = dom.get_elements(selector, By.XPATH)
 
     all_visible = list(filter(lambda i: i.is_displayed(), all_elements))

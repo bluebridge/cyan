@@ -1,6 +1,6 @@
 from teamcity.unittestpy import TeamcityTestResult
 from teamcity.unittestpy import TeamcityTestRunner
-from ..core import dom
+from cyan.core import dom
 
 
 class CyanTestResult(TeamcityTestResult):
