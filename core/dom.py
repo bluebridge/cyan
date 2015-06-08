@@ -649,3 +649,12 @@ def is_print_dialog_present(timeout: int=5) -> bool:
         pass
 
     return ret
+
+def get_growl_message():
+    wait_visibility_of_element(".growl-message.ng-binding")
+    msg = get_element(".growl-message.ng-binding")
+
+    if msg:
+        return msg.text
+    else:
+        return ''
