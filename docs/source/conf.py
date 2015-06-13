@@ -24,7 +24,7 @@ import shlex
 import mock
 import re
 
-project_path = os.path.abspath('../../..')
+project_path = os.path.abspath('../..')
 sys.path.insert(0, project_path)
 # project_path = os.path.abspath('../..')
 # sys.path.insert(0, project_path)

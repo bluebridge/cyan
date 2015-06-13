@@ -4,42 +4,42 @@ cyan API
 Sub Modules
 -----------
 
-cyan.data
----------
+cyan.core.data
+--------------
 
-.. automodule:: cyan.core.data
+.. automodule:: core.data
     :members:
     :undoc-members:
     :show-inheritance:
 
-cyan.dom
---------
-
-.. automodule:: cyan.core.dom
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-cyan.input
-----------
-
-.. automodule:: cyan.core.input
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-cyan.nav
---------
-
-.. automodule:: cyan.core.nav
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-cyan.security
+cyan.core.dom
 -------------
 
-.. automodule:: cyan.core.security
+.. automodule:: core.dom
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+cyan.core.input
+---------------
+
+.. automodule:: core.input
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+cyan.core.nav
+-------------
+
+.. automodule:: core.nav
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+cyan.core.security
+------------------
+
+.. automodule:: core.security
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,7 +48,7 @@ cyan.security
 Module contents
 ---------------
 
-.. automodule:: cyan.core
+.. automodule:: core
     :members:
     :undoc-members:
     :show-inheritance:
