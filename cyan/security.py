@@ -9,7 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 
-from cyan.core import common
+from . import common
 
 
 def init_class(config_path: str=''):
@@ -46,7 +46,7 @@ def get_driver_path(driver_name: str):
 def get_project_path():
     path = os.path.abspath(__file__)
 
-    return os.path.dirname(path).replace('\cyan\core', '')
+    return os.path.dirname(path).replace('\cyan\cyan', '')
 
 
 def check_self(check_logging: bool=True):

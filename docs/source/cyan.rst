@@ -7,7 +7,7 @@ Sub Modules
 cyan.data
 ---------
 
-.. automodule:: cyan.core.data
+.. automodule:: cyan.data
     :members:
     :undoc-members:
     :show-inheritance:
@@ -15,7 +15,7 @@ cyan.data
 cyan.dom
 --------
 
-.. automodule:: cyan.core.dom
+.. automodule:: cyan.dom
     :members:
     :undoc-members:
     :show-inheritance:
@@ -23,7 +23,7 @@ cyan.dom
 cyan.input
 ----------
 
-.. automodule:: cyan.core.input
+.. automodule:: cyan.input
     :members:
     :undoc-members:
     :show-inheritance:
@@ -31,7 +31,7 @@ cyan.input
 cyan.nav
 --------
 
-.. automodule:: cyan.core.nav
+.. automodule:: cyan.nav
     :members:
     :undoc-members:
     :show-inheritance:
@@ -39,7 +39,7 @@ cyan.nav
 cyan.security
 -------------
 
-.. automodule:: cyan.core.security
+.. automodule:: cyan.security
     :members:
     :undoc-members:
     :show-inheritance:
@@ -48,7 +48,7 @@ cyan.security
 Module contents
 ---------------
 
-.. automodule:: cyan.core
+.. automodule:: cyan
     :members:
     :undoc-members:
     :show-inheritance:

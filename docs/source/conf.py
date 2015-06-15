@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# core documentation build configuration file, created by
+# cyan documentation build configuration file, created by
 # sphinx-quickstart on Thu Apr 23 10:53:19 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -24,7 +24,7 @@ import shlex
 import mock
 import re
 
-project_path = os.path.abspath('../../..')
+project_path = os.path.abspath('../..')
 sys.path.insert(0, project_path)
 # project_path = os.path.abspath('../..')
 # sys.path.insert(0, project_path)
@@ -60,7 +60,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'core'
+project = 'cyan'
 copyright = '2015, Blue Bridge'
 author = 'Blue Bridge'
 
@@ -236,7 +236,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'core.tex', 'core Documentation',
+    (master_doc, 'cyan.tex', 'cyan Documentation',
      'Blue Bridge', 'manual'),
 ]
 
@@ -266,7 +266,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'core', 'core Documentation',
+    (master_doc, 'cyan', 'cyan Documentation',
      [author], 1)
 ]
 
@@ -280,8 +280,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'core', 'core Documentation',
-     author, 'core', 'One line description of project.',
+    (master_doc, 'cyan', 'cyan Documentation',
+     author, 'cyan', 'One line description of project.',
      'Miscellaneous'),
 ]
 

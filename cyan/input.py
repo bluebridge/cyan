@@ -1,14 +1,14 @@
 import string
 import datetime
 
-from cyan.core import dom, security, common
+from . import dom, security, common
 
 from selenium.webdriver import ActionChains
 
 from selenium.webdriver.remote.webelement import *
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
-from cyan.core.common import ListFilterType
+from .common import ListFilterType
 
 ListCssFilters = {1: "list#%s']",
                   2: "list[ng-model='%s']",

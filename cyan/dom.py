@@ -22,7 +22,7 @@ from selenium.webdriver.common.by import By
 import sys
 
 sys.path.append("../..")
-from cyan.core import security, common
+from . import security, common
 
 
 def get_browser() -> webdriver.chrome.webdriver.WebDriver:
