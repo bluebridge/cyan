@@ -98,7 +98,7 @@ def fill_textbox_by_label_text(label_text, value_for_textbox,
     text_box.send_keys(value_for_textbox)
 
 
-def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, attr_name: string='placeholder'):
+def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, attr_name: string='@placeholder'):
     """
     Write to  a textbox by its attribute value.
 
@@ -130,7 +130,7 @@ def fill_text_boxes_by_labels_text(labels):
         # it is not logic to have to functions for this
 
 
-def fill_text_boxes_by_attribute_value(values: dict, attr_name: string='placeholder'):
+def fill_text_boxes_by_attribute_value(values: dict, attr_name: string='@placeholder'):
     """
     Write to  a series of textbox by trier attribute values.
 
