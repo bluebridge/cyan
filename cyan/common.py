@@ -6,6 +6,7 @@ driver_path = r"drivers\chromedriver.exe"
 connection_string = ""
 browser = None  # webdriver.Chrome(driver_path)
 checking = False
+indexing = False
 
 
 class TextSearchType(Enum):
