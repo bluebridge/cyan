@@ -246,7 +246,7 @@ def is_element_selected(search_filter: str, element_by: By=By.CSS_SELECTOR) -> b
 
     try:
         element = get_element(search_filter, element_by)
-        return element.is_selected
+        return element.is_selected()
     except NoSuchElementException:
         return False
     except ConnectionRefusedError:
@@ -302,13 +302,17 @@ def get_Options_from_dropdown_search(css: str):
     we = get_element(css1)
     we.click()  # Open up the entry box
 
-    css = '.list-options .list-item'
-    we = get_elements(css)
+    new_css = '.list-options .list-item'
+    we = get_elements(new_css)
     count = len(we)
 
     for x in range(0, (count - 1)):
         name = we[x].text
         options.append(name)
+
+    css2 = css + ' input'
+    we = get_element(css2)
+    we.send_keys(webdriver.common.keys.Keys.ESCAPE)
 
     return options
 
@@ -531,6 +535,19 @@ def scroll_to_bottom():
         common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         wait(2)
 
+
+def scroll_to_top():
+    """
+    Scrolls the page to the top.
+
+    """
+    security.check_self()
+    reached_top = False
+    while not reached_top:
+        reached_top = common.browser.execute_script(
+            "return $(document).height() == ($(window).height() + $(window).scrollTop());")
+        common.browser.execute_script("window.scrollTo(0, 0);")
+        wait(2)
 
 def scroll_down():
     """

@@ -282,6 +282,17 @@ def click_on_element(element_to_click: WebElement):
     element_to_click.click()
 
 
+def click_on_span_element(element_to_click: WebElement):
+    """
+    Perform a click on an element
+
+    :param element_to_click: element to click
+    """
+    security.check_self()
+    # dom.validate_element(element_to_click)
+    ActionChains(common.browser).move_to_element(element_to_click).click().perform()
+
+
 def hover_on_element(element_to_hover: WebElement):
     security.check_self()
     # assert (element_to_hover is not None)
