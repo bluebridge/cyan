@@ -21,6 +21,7 @@ class ListFilterType(Enum):
     NgModel = 2
     Lookup = 3
     PlaceHolder = 4
+    Name = 5
 
 
 def get_attr_xpath(prefix: str, attr_name: str, attr_value: str, search_type: TextSearchType=TextSearchType.Contain,

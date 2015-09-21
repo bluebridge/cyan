@@ -13,7 +13,8 @@ from .common import ListFilterType
 ListCssFilters = {1: "list#%s']",
                   2: "list[ng-model='%s']",
                   3: "list[lookup='%s']",
-                  4: "list[placeholder='%s']"
+                  4: "list[placeholder='%s']",
+                  5: "list[name='%s']"
                   }
 
 
