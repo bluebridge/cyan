@@ -12,6 +12,7 @@
 from http.client import CannotSendRequest
 import datetime
 import time
+import string
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions as ec
 from selenium import webdriver
@@ -667,6 +668,7 @@ def is_print_dialog_present(timeout: int=5) -> bool:
 
     return ret
 
+
 def get_growl_message():
     wait_visibility_of_element(".growl-message.ng-binding")
     msg = get_element(".growl-message.ng-binding")
@@ -675,3 +677,9 @@ def get_growl_message():
         return msg.text
     else:
         return ''
+
+
+def get_facet_element(facet: string, value: string):
+    """Select a value from a faceted search facet"""
+    xpath = "//label[text()='" + facet + "']/following::ul[1]/li[contains(.,'" + value + "')]"
+    return get_element(xpath, by=By.XPATH)
