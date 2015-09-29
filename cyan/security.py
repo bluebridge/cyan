@@ -29,7 +29,6 @@ def init_class(config_path: str=''):
 
     common.browser = webdriver.Chrome(common.driver_path)
     common.browser.maximize_window()
-    common.checking = False
 
 
 def get_config_path():
