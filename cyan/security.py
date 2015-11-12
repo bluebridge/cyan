@@ -22,12 +22,24 @@ def init_class(config_path: str=''):
     connection_string = config['SITE']['ConnectionString'] or r"Driver={SQL Server Native Client 11.0}; " \
                                                               "Server=.; Database=cosacs;uid=sa;pwd=;"
     driver_path = config['SITE']['DriverRelPath'] or r'\drivers\chromedriver.exe'
+    use_remote = config['SELENIUM']['UseHub'] or False
 
     common.site_url = site
     common.driver_path = get_driver_path(driver_path)
     common.connection_string = connection_string
 
-    common.browser = webdriver.Chrome(common.driver_path)
+    if use_remote == 'True':
+        hub_ip = config['SELENIUM']['HubIp'] or '192.168.30.8'
+        hub_port = config['SELENIUM']['HubPort'] or '4444'
+        hub_url = 'http://%s:%s/wd/hub' % (hub_ip, hub_port)
+
+        print('using hub at: %s' % hub_url)
+
+        desired_caps = {'platform': 'WINDOWS', 'browserName': 'chrome'}
+        common.browser = webdriver.Remote(hub_url, desired_caps)
+    else:
+        common.browser = webdriver.Chrome(common.driver_path)
+
     common.browser.maximize_window()
 
 

@@ -8,7 +8,6 @@ browser = None  # webdriver.Chrome(driver_path)
 checking = False
 indexing = False
 
-
 class TextSearchType(Enum):
     Exact = 1
     Start_with = 2
