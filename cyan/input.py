@@ -239,35 +239,17 @@ def set_select_value_by_text(place_holder_text: string, sel_text: string):
         return None
 
 
-def set_select2_value_by_model(ng_model_text: str, sel_text: str,
-                               search_type: common.TextSearchType = common.TextSearchType.Contain):
-    """
-    Please note this is case sensitive
-    :param ng_model_text:
-    :param sel_text:
-    :param search_type:
-    :return:
-    """
-    xpath = "//select[@ng-model='%s']" % ng_model_text
-    lst = dom.get_element(xpath, By.XPATH)
-
-    if lst:
-        xpath = common.get_attr_xpath("//option", "text()", sel_text)
-        list_item = lst.find_element_by_xpath(xpath)
-        if list_item:
-            list_item.click()
-
-    else:
-        return None
-
-
-def set_value_by_value(ng_model: string, value: string):
-    xpath = "//select[@ng-model='%s']/option[@value='%s']" % (ng_model, value)
+def set_drop_down_value_by_model(ng_model: str, value: str,
+                                 search_type: common.TextSearchType = common.TextSearchType.Contain):
+    xpath = "//select[@ng-model='%s']/option" % ng_model
+    xpath = common.get_attr_xpath_ci(xpath, "@value", value, search_type)
     click_element(xpath, By.XPATH)
 
 
-def set_value_by_text(ng_model: string, text: string):
-    xpath = "//select[@ng-model='%s']/option[text()='%s']" % (ng_model, text)
+def set_drop_down_text_by_model(ng_model: str, value: str,
+                                search_type: common.TextSearchType = common.TextSearchType.Contain):
+    xpath = "//select[@ng-model='%s']/option" % ng_model
+    xpath = common.get_attr_xpath_ci(xpath, "text()", value, search_type)
     click_element(xpath, By.XPATH)
 
 
