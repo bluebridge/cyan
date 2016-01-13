@@ -47,11 +47,12 @@ def get_attr_xpath_ci(prefix: str, attr_name: str, attr_value: str,
     :param suffix:
     :return:
     """
-    options = {1: "%s[normalize-space(translate(%s,%s,'%s'))='%s']%s",
-               2: "%s[starts-with(translate(%s,%s,'%s'), '%s')]%s",
-               3: "%s[ends-with(translate(%s,%s,'%s'), '%s')]%s",  # Not Supported in XPath 1.0, Use 'Contains'
-               4: "%s[contains(translate(%s,%s,'%s'), '%s')]%s"
+    options = {1: "%s[normalize-space(translate(%s,'%s','%s'))='%s']%s",
+               2: "%s[starts-with(translate(%s,'%s','%s'), '%s')]%s",
+               3: "%s[ends-with(translate(%s,'%s','%s'), '%s')]%s",  # Not Supported in XPath 1.0, Use 'Contains'
+               4: "%s[contains(translate(%s,'%s','%s'), '%s')]%s"
                }
 
-    ret = options[search_type.value] % (prefix, attr_name, attr_value.upper(), attr_value.lower(), attr_value.lower(), suffix)
+    ret = options[search_type.value] % (
+    prefix, attr_name, attr_value.upper(), attr_value.lower(), attr_value.lower(), suffix)
     return ret
