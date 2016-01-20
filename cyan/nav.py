@@ -29,7 +29,7 @@ def refresh():
     common.browser.refresh()
 
 
-def go(url: string):
+def go(url: string, is_route:bool=True):
     """
     Navigate to a specific Url.
 
@@ -38,6 +38,9 @@ def go(url: string):
     security.check_self()
     if not url.startswith(common.site_url):
         url = r"".join([common.site_url, url])
+
+    if (not is_route):
+        url = url.replace("/#","")
 
     common.browser.get(url)
 
