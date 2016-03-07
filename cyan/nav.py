@@ -66,7 +66,9 @@ def multi_menu(menu_hierarchy: string, delimiter: string=","):
         if index == 1 or index == last_index:
             ele.click()
         else:
-            input.hover_on_element(ele)
+                # input.hover_on_element(ele)
+                parent = ele.find_element_by_xpath("..")
+                dom.execute_script("arguments[0].style.display='block'", parent.find_element_by_css_selector("ul"))
 
         index += 1
 

@@ -574,6 +574,11 @@ def scroll_element_into_view(elementWe):
     common.browser.execute_script('window.scrollTo(0, {0})'.format(y))
     wait(0.5)
 
+
+def execute_script(script, ele):
+    common.browser.execute_script(script, ele)
+
+
 def screen_shot(file_name: str, file_directory: str='./Screenshots'):
     """
     takes a screen-shot of the current web page and saves. If the specified folder don't exists, it will be created
