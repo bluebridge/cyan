@@ -18,7 +18,7 @@ ListCssFilters = {1: "list#%s']",
                   }
 
 
-def write_on_textbox(text: string, search_filter: string, by: By = By.CSS_SELECTOR):
+def write_on_textbox(text: string, search_filter: string, by: By=By.CSS_SELECTOR):
     """
     Write on a textbox element.
 
@@ -31,7 +31,7 @@ def write_on_textbox(text: string, search_filter: string, by: By = By.CSS_SELECT
     write_on_element(text, element)
 
 
-def write_on_ng_textbox(text: str, model_name: str, element_tag: str = '*', angular_prefix: str = 'ng'):
+def write_on_ng_textbox(text: str, model_name: str, element_tag: str='*', angular_prefix: str='ng'):
     """
     Write on a textbox element using Angular model name.
 
@@ -56,7 +56,7 @@ def write_on_element(text: string, element: WebElement):
     element.send_keys(text)
 
 
-def click_button(button_text: string, tag: str = 'button'):
+def click_button(button_text: string, tag: str='button'):
     """
     Click on a button by its display text.
 
@@ -80,7 +80,7 @@ def click_button_by_id(button_id: string):
 
 
 def fill_textbox_by_label_text(label_text, value_for_textbox,
-                               search_type: common.TextSearchType = common.TextSearchType.Exact):
+                               search_type: common.TextSearchType=common.TextSearchType.Exact):
     """
     Write to  a textbox by its label text.
 
@@ -99,7 +99,7 @@ def fill_textbox_by_label_text(label_text, value_for_textbox,
     text_box.send_keys(value_for_textbox)
 
 
-def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, attr_name: string = '@placeholder'):
+def fill_textbox_by_attribute_value(value_to_fill: string, attr_value: string, attr_name: string='@placeholder'):
     """
     Write to  a textbox by its attribute value.
 
@@ -131,7 +131,7 @@ def fill_text_boxes_by_labels_text(labels):
         # it is not logic to have to functions for this
 
 
-def fill_text_boxes_by_attribute_value(values: dict, attr_name: string = '@placeholder'):
+def fill_text_boxes_by_attribute_value(values: dict, attr_name: string='@placeholder'):
     """
     Write to  a series of textbox by trier attribute values.
 
@@ -177,7 +177,7 @@ def select2_set_value_ex(grayed_text: string, value: string):
     security.check_self()
 
     selector = "//div[contains(concat(' ',normalize-space(@class),' '),' list-placeholder ')]/span[text()='{0}']/..".format(
-            grayed_text)
+        grayed_text)
     all_elements = dom.get_elements(selector, By.XPATH)
 
     all_visible = list(filter(lambda i: i.is_displayed(), all_elements))
@@ -193,7 +193,7 @@ def select2_set_value_ex(grayed_text: string, value: string):
     click_element(selector)
 
 
-def select_set_value(value: str, search_type: common.TextSearchType = common.TextSearchType.Contain):
+def select_set_value(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Select a value from a drop down list by passing the string text of that value
     :param value:
@@ -205,8 +205,8 @@ def select_set_value(value: str, search_type: common.TextSearchType = common.Tex
     option_item.click()
 
 
-def set_list_value(value: str, list_filter: str, filter_type: ListFilterType = ListFilterType.NgModel,
-                   search_type: common.TextSearchType = common.TextSearchType.Contain):
+def set_list_value(value: str, list_filter: str, filter_type: ListFilterType=ListFilterType.NgModel,
+                   search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Select a list item of the 'list' drop-down directive by the passed value
     :param value: The list item value to select
@@ -225,7 +225,7 @@ def set_list_value(value: str, list_filter: str, filter_type: ListFilterType = L
         list_item.click()
 
 
-def set_select_value_by_text(place_holder_text: string, sel_text: string):
+def set_select_value_by_text(place_holder_text: string, sel_text:string):
     xpath = "//list[@placeholder='%s']" % place_holder_text
     lst = dom.get_element(xpath, By.XPATH)
 
@@ -253,7 +253,7 @@ def set_drop_down_text_by_model(ng_model: str, value: str,
     click_element(xpath, By.XPATH)
 
 
-def clear_textbox(textbox_filter: string, by: By = By.CSS_SELECTOR, submit: bool = True):
+def clear_textbox(textbox_filter: string, by: By=By.CSS_SELECTOR, submit: bool=True):
     security.check_self()
     textbox = dom.get_element(textbox_filter, by)
     dom.validate_element(textbox)
@@ -263,7 +263,7 @@ def clear_textbox(textbox_filter: string, by: By = By.CSS_SELECTOR, submit: bool
         write_on_element(Keys.ENTER, textbox)
 
 
-def click_element(search_filter: string, by: By = By.CSS_SELECTOR):
+def click_element(search_filter: string, by: By=By.CSS_SELECTOR):
     """
     Click on element.
 
@@ -325,7 +325,7 @@ def close_notification():
         pass
 
 
-def focus_on_element(search_filter: string, by: By = By.CSS_SELECTOR):
+def focus_on_element(search_filter: string, by: By=By.CSS_SELECTOR):
     element = dom.get_element(search_filter, by)
     focus_on_element(element)
 
@@ -343,7 +343,7 @@ def add_days(days: int):
     datetime.date.today() + datetime.timedelta(days=days).d.day
 
 
-def get_element_attribute(search_filter: string, attribute: string, by: By = By.CSS_SELECTOR) -> string:
+def get_element_attribute(search_filter: string, attribute: string, by: By=By.CSS_SELECTOR) -> string:
     """
     Get an element's attribute value by its identifier.
 
@@ -358,7 +358,7 @@ def get_element_attribute(search_filter: string, attribute: string, by: By = By.
     return ele.get_attribute(attribute)
 
 
-def get_element_value(search_filter: string, by: By = By.CSS_SELECTOR) -> string:
+def get_element_value(search_filter: string, by: By=By.CSS_SELECTOR) -> string:
     """
     Get an element's value by its identifier.
 
@@ -369,3 +369,25 @@ def get_element_value(search_filter: string, by: By = By.CSS_SELECTOR) -> string
     """
     security.check_self()
     return get_element_attribute(search_filter, 'value', by)
+
+
+def clear_select2_by_label(label_text):
+    """
+    Clicks the little 'x' in a Cosacs drop down based on id
+    """
+    xpath = "//label[text()='" + label_text + "']/following::i[contains(@class, 'remove')][1]"
+    element = dom.get_element(xpath, By.XPATH)
+    if element.is_displayed():
+        click_on_element(element)
+		
+def clear_select2_by_css(search_filter: string, by: By=By.CSS_SELECTOR):
+    """
+    Clicks the little 'x' in a Cosacs select2 based on a css selector for the select2
+    
+    :param search_filter: The element identifier to search by
+    :param by: Element filter type
+    """
+    search_filter += ' .remove'
+    element = dom.get_element(search_filter, by)
+    if element.is_displayed():
+        click_on_element(element)

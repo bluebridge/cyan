@@ -122,6 +122,34 @@ def wait_visibility_of_element(search_filter, element_by: By=By.CSS_SELECTOR, ti
         .until(lambda s: s.find_element(element_by, search_filter).is_displayed(), msg)
 
 
+def wait_for_element_enabled(search_filter, element_by: By=By.CSS_SELECTOR, timer: int=10,
+                               msg: str='Waiting for element timed out'):
+    """
+    Wait for an element to be enabled on the page.
+
+    :param search_filter: The element identifier to search by
+    :param timer: time to wait before it through a timeout error
+    :param element_by: element filter type
+    """
+    security.check_self()
+    WebDriverWait(common.browser, timer) \
+        .until(lambda s: s.find_element(element_by, search_filter).is_enabled(), msg)
+
+
+def wait_non_visibility_of_element(search_filter, element_by: By=By.CSS_SELECTOR, timer: int=10,
+                               msg: str='Waiting for element timed out'):
+    """
+    Wait for an element to be loaded and become visible on the page.
+
+    :param search_filter: The element identifier to search by
+    :param timer: time to wait before it through a timeout error
+    :param element_by: element filter type
+    """
+    security.check_self()
+    WebDriverWait(common.browser, timer) \
+        .until_not(lambda s: s.find_element(element_by, search_filter).is_displayed(), msg)
+
+
 def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
                                        msg: str='Waiting for element timed out',
                                        search_type: common.TextSearchType=common.TextSearchType.Contain):
@@ -183,6 +211,17 @@ def is_element_visible(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bo
 
     try:
         element = get_element(search_filter, element_by)
+        return element.is_displayed()
+    except NoSuchElementException:
+        return False
+    except ConnectionRefusedError:
+        return False
+
+
+def is_web_element_visible(element) -> bool:
+    security.check_self()
+
+    try:
         return element.is_displayed()
     except NoSuchElementException:
         return False
@@ -408,7 +447,7 @@ def get_element_by_text(value: str, tag: str='*',
 
     prefix = "//%s" % tag
 
-    xpath = common.get_attr_xpath(prefix, 'text()', value, search_type)
+    xpath = common.get_attr_xpath(prefix, 'normalize-space(text())', value, search_type)
     ele = get_element(xpath, By.XPATH)
 
     if ele:
@@ -676,7 +715,7 @@ def is_print_dialog_present(timeout: int=5) -> bool:
 
 def get_growl_message():
     wait_visibility_of_element(".growl-message.ng-binding")
-    msg = get_element(".growl-message.ng-binding")
+    msg = get_element("(//p[@class='growl-message ng-binding'])[1]", by=By.XPATH)
 
     if msg:
         return msg.text
@@ -688,3 +727,11 @@ def get_facet_element(facet: string, value: string):
     """Select a value from a faceted search facet"""
     xpath = "//label[text()='" + facet + "']/following::ul[1]/li[contains(.,'" + value + "')]"
     return get_element(xpath, by=By.XPATH)
+
+
+def get_drop_down_selected_value(drop_down_id):
+    # First strip the '#' if supplied
+    drop_down_id = drop_down_id.replace('#', '')
+    xpath = "//list[@id='" + drop_down_id + "']/descendant::span[contains(@class,'selected')]"
+    element = get_element(xpath, By.XPATH)
+    return element.text

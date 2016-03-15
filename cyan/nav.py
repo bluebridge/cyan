@@ -284,3 +284,7 @@ def get_menu_item(ele: WebElement) -> MenuItem:
         menu_item.nodes.append(sub_menu)
 
     return menu_item
+
+
+def get_current_url():
+    return common.browser.current_url
