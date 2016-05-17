@@ -293,6 +293,23 @@ def is_element_selected(search_filter: str, element_by: By=By.CSS_SELECTOR) -> b
         return False
 
 
+def is_web_element_selected(element: WebElement) -> bool:
+    """
+    To check if a tick box is selected.
+
+    :param element:
+    :return:
+    """
+    security.check_self()
+
+    try:
+        return element.is_selected()
+    except NoSuchElementException:
+        return False
+    except ConnectionRefusedError:
+        return False
+
+
 def is_element_enabled(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
     security.check_self()
 

@@ -220,7 +220,10 @@ def set_list_value(value: str, list_filter: str, filter_type: ListFilterType=Lis
         arrow_btn = ele.find_element_by_class_name('list-arrow')
         arrow_btn.click()
 
-        xpath = common.get_attr_xpath("//div", "text()", value)
+        if filter_type == ListFilterType.PlaceHolder:
+            xpath = "//list[@placeholder='" + list_filter + "']/descendant::div[contains(text(), '" + value + "')][1]"
+        else:
+            xpath = common.get_attr_xpath("//div", "text()", value)
         list_item = ele.find_element_by_xpath(xpath)
         list_item.click()
 
@@ -379,7 +382,7 @@ def clear_select2_by_label(label_text):
     element = dom.get_element(xpath, By.XPATH)
     if element.is_displayed():
         click_on_element(element)
-		
+
 def clear_select2_by_css(search_filter: string, by: By=By.CSS_SELECTOR):
     """
     Clicks the little 'x' in a Cosacs select2 based on a css selector for the select2
