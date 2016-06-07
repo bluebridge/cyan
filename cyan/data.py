@@ -70,8 +70,32 @@ def sql_execute_file(path: string):
     f.close()
 
 
-def convert_rows_to_array(rows):
+def sql_execute_files(files, fetch_type: common.CursorFetchType = common.CursorFetchType.All):
+    conn = pypyodbc.connect(common.connection_string)
+    cur = conn.cursor()
 
+    for file in files:
+        sql = read_file_text(file)
+        cur.execute(sql)
+
+    print(fetch_type)
+    data = {
+        0: lambda x: None,
+        1: lambda x: x.fetchone(),
+        2: lambda x: x.fetchall(),
+        3: lambda x: x.fetchmany()
+    }[fetch_type.value](cur)
+
+    # data = cur.fetchall()
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+    return data
+
+
+def convert_rows_to_array(rows):
     """
     Convert rows to an array
 
@@ -87,6 +111,12 @@ def convert_rows_to_array(rows):
     return result
 
 
+def read_file_text(path):
+    f = open(path, 'r')
+
+    return f.read()
+
+
 def get_random_text(prefix: string) -> string:
     """
     Get a random word post-fixed with a random number
@@ -95,5 +125,3 @@ def get_random_text(prefix: string) -> string:
     :return: A random word post-fixed with a random number within the range of (0-9999)
     """
     return '%s%d' % (prefix, fake.random_int(min=0, max=9999))  # (prefix, random.random() * 100)
-
-

@@ -24,6 +24,13 @@ class ListFilterType(Enum):
     Name = 5
 
 
+class CursorFetchType(Enum):
+    Nothing = 0
+    One = 1
+    All = 2
+    Many = 3
+
+
 def get_attr_xpath(prefix: str, attr_name: str, attr_value: str, search_type: TextSearchType = TextSearchType.Contain,
                    suffix: str = ""):
     options = {1: "%s[normalize-space(%s)='%s']%s",
@@ -54,5 +61,5 @@ def get_attr_xpath_ci(prefix: str, attr_name: str, attr_value: str,
                }
 
     ret = options[search_type.value] % (
-    prefix, attr_name, attr_value.upper(), attr_value.lower(), attr_value.lower(), suffix)
+        prefix, attr_name, attr_value.upper(), attr_value.lower(), attr_value.lower(), suffix)
     return ret
