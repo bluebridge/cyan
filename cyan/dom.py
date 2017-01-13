@@ -505,7 +505,7 @@ def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_
     :return: The element
     """
 
-    attr_name = "%s-model" % angular_prefix
+    attr_name = "@%s-model" % angular_prefix
     return get_element_by_attribute(attr_name, model_name, element_tag)
 
 
