@@ -13,7 +13,8 @@ from http.client import CannotSendRequest
 import datetime
 import time
 import string
-from selenium.webdriver import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as ec
 from selenium import webdriver
 from selenium.common.exceptions import *
@@ -37,7 +38,7 @@ def get_browser() -> webdriver.chrome.webdriver.WebDriver:
     return common.browser
 
 
-def wait_for_text_present(text_to_present: str, text_element: str, by: By=By.CSS_SELECTOR, timer: int=10):
+def wait_for_text_present(text_to_present: str, text_element: str, by: By = By.CSS_SELECTOR, timer: int = 10):
     """
     Wait for a string literal to be present on the page.
 
@@ -54,7 +55,7 @@ def wait_for_text_present(text_to_present: str, text_element: str, by: By=By.CSS
         element_text_available_callback(text_to_present, text_element, by))
 
 
-def wait_presence_of_element(search_filter, by: By=By.CSS_SELECTOR, timer: int=10):
+def wait_presence_of_element(search_filter, by: By = By.CSS_SELECTOR, timer: int = 10):
     """
     Wait for an element to be loaded on the page
 
@@ -69,11 +70,12 @@ def wait_presence_of_element(search_filter, by: By=By.CSS_SELECTOR, timer: int=1
     )
 
 
-def wait_presence_of_element_by_text(element_text: str, timer: int=10,
-                                     search_type: common.TextSearchType=common.TextSearchType.Contain):
+def wait_presence_of_element_by_text(element_text: str, timer: int = 10,
+                                     search_type: common.TextSearchType = common.TextSearchType.Contain):
     """
     Wait for an element to be loaded on the page
 
+    :param search_type:
     :param element_text: The element text to search by
     :param timer: time to wait before it through a timeout error
     """
@@ -86,7 +88,7 @@ def wait_presence_of_element_by_text(element_text: str, timer: int=10,
     )
 
 
-def element_text_available_callback(element_text: str, element: str, by: By=By.CSS_SELECTOR):
+def element_text_available_callback(element_text: str, element: str, by: By = By.CSS_SELECTOR):
     """
 
     :param element_text:
@@ -109,11 +111,12 @@ def element_text_available_callback(element_text: str, element: str, by: By=By.C
     return callback
 
 
-def wait_visibility_of_element(search_filter, element_by: By=By.CSS_SELECTOR, timer: int=10,
-                               msg: str='Waiting for element timed out'):
+def wait_visibility_of_element(search_filter, element_by: By = By.CSS_SELECTOR, timer: int = 10,
+                               msg: str = 'Waiting for element timed out'):
     """
     Wait for an element to be loaded and become visible on the page.
 
+    :param msg:
     :param search_filter: The element identifier to search by
     :param timer: time to wait before it through a timeout error
     :param element_by: element filter type
@@ -151,12 +154,13 @@ def wait_non_visibility_of_element(search_filter, element_by: By=By.CSS_SELECTOR
         .until_not(lambda s: s.find_element(element_by, search_filter).is_displayed(), msg)
 
 
-def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
-                                       msg: str='Waiting for element timed out',
-                                       search_type: common.TextSearchType=common.TextSearchType.Contain):
+def wait_visibility_of_element_by_text(element_text: str, timer: int = 10,
+                                       msg: str = 'Waiting for element timed out',
+                                       search_type: common.TextSearchType = common.TextSearchType.Contain):
     """
     Wait for an element to be loaded and become visible on the page.
 
+    :param search_type:
     :param element_text: The element's text to search by
     :param timer: time to wait before it through a timeout error
     :param msg: Message to fire when timeout error thrown
@@ -168,8 +172,8 @@ def wait_visibility_of_element_by_text(element_text: str, timer: int=10,
         .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
 
 
-def wait_visibility_of_ng_element(model_name: str, timer: int=10, element_tag: str='*', angular_prefix: str='ng',
-                                  msg: str='Waiting for element timed out'):
+def wait_visibility_of_ng_element(model_name: str, timer: int = 10, element_tag: str = '*', angular_prefix: str = 'ng',
+                                  msg: str = 'Waiting for element timed out'):
     """
     Wait for an element to be loaded and become visible on the page.
 
@@ -189,7 +193,7 @@ def wait_visibility_of_ng_element(model_name: str, timer: int=10, element_tag: s
         .until(lambda s: s.find_element(By.XPATH, xpath).is_displayed(), msg)
 
 
-def is_element_present(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_present(search_filter: str, element_by: By = By.CSS_SELECTOR) -> bool:
     """
     Check the present of an element on the current page.
 
@@ -207,7 +211,7 @@ def is_element_present(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bo
         # assert 0, "can't find element: '%s' using its '%s'" % (search_filter, element_by)
 
 
-def is_element_visible(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_visible(search_filter: str, element_by: By = By.CSS_SELECTOR) -> bool:
     security.check_self()
 
     try:
@@ -246,7 +250,7 @@ def is_element_visible_text(element_text: str) -> bool:
     return state
 
 
-def is_element_visible_attr(attr_name: str, attr_value: str, tag: str='input') -> bool:
+def is_element_visible_attr(attr_name: str, attr_value: str, tag: str = 'input') -> bool:
     state = False
     xpath = "//{0}[@{1}='{2}']".format(tag, attr_name, attr_value)
     ele = common.browser.find_elements_by_xpath(xpath)
@@ -257,7 +261,7 @@ def is_element_visible_attr(attr_name: str, attr_value: str, tag: str='input') -
     return state
 
 
-def is_element_disabled(css: str)-> bool:
+def is_element_disabled(css: str) -> bool:
     """
     Checks if the element has the 'disabled' class attached to the element.
 
@@ -275,7 +279,7 @@ def is_element_disabled(css: str)-> bool:
     return False
 
 
-def is_element_selected(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_selected(search_filter: str, element_by: By = By.CSS_SELECTOR) -> bool:
     """
     To check if a tick box is selected.
 
@@ -311,7 +315,7 @@ def is_web_element_selected(element: WebElement) -> bool:
         return False
 
 
-def is_element_enabled(search_filter: str, element_by: By=By.CSS_SELECTOR) -> bool:
+def is_element_enabled(search_filter: str, element_by: By = By.CSS_SELECTOR) -> bool:
     security.check_self()
 
     try:
@@ -423,7 +427,7 @@ def validate_element(element: WebElement):
     assert (element.is_enabled()), "element is not enabled"
 
 
-def get_element(search_filter: str, by: By=By.CSS_SELECTOR) -> WebElement:
+def get_element(search_filter: str, by: By = By.CSS_SELECTOR) -> WebElement:
     """
     Get an element by its identifier.
 
@@ -436,7 +440,7 @@ def get_element(search_filter: str, by: By=By.CSS_SELECTOR) -> WebElement:
     return common.browser.find_element(by, search_filter)
 
 
-def get_element_by_value(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
+def get_element_by_value(value: str, search_type: common.TextSearchType = common.TextSearchType.Contain) -> WebElement:
     """
     Get DOM element by its value.
 
@@ -451,8 +455,8 @@ def get_element_by_value(value: str, search_type: common.TextSearchType=common.T
     return common.browser.find_elements_by_xpath(xpath)
 
 
-def get_element_by_text(value: str, tag: str='*',
-                        search_type: common.TextSearchType=common.TextSearchType.Contain) -> WebElement:
+def get_element_by_text(value: str, tag: str = '*',
+                        search_type: common.TextSearchType = common.TextSearchType.Contain) -> WebElement:
     """
     Get DOM element by its text.
 
@@ -474,8 +478,8 @@ def get_element_by_text(value: str, tag: str='*',
         return None
 
 
-def get_element_by_attribute(attribute_name: str, attribute_value: str, element_tag: str='*',
-                             search_type: common.TextSearchType=common.TextSearchType.Exact) -> WebElement:
+def get_element_by_attribute(attribute_name: str, attribute_value: str, element_tag: str = '*',
+                             search_type: common.TextSearchType = common.TextSearchType.Exact) -> WebElement:
     """
     Get DOM element by its attribute.
 
@@ -494,7 +498,7 @@ def get_element_by_attribute(attribute_name: str, attribute_value: str, element_
     return common.browser.find_element_by_xpath(xpath)
 
 
-def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_prefix: str='ng') -> WebElement:
+def get_element_by_angular_model(model_name: str, element_tag: str = '*', angular_prefix: str = 'ng') -> WebElement:
     """
     Get DOM element by its AngularJs model's binding.
 
@@ -509,7 +513,7 @@ def get_element_by_angular_model(model_name: str, element_tag: str='*', angular_
     return get_element_by_attribute(attr_name, model_name, element_tag)
 
 
-def get_elements(search_filter: str, by: By=By.CSS_SELECTOR):
+def get_elements(search_filter: str, by: By = By.CSS_SELECTOR):
     """
     Get all element by its identifier.
 
@@ -533,7 +537,7 @@ def get_label_by_partial_text(label_text: str) -> WebElement:
     return get_label_by_text(label_text, common.TextSearchType.Contain)
 
 
-def get_label_by_text(label_text: str, search_type: common.TextSearchType=common.TextSearchType.Exact) -> WebElement:
+def get_label_by_text(label_text: str, search_type: common.TextSearchType = common.TextSearchType.Exact) -> WebElement:
     """
     Get a label by its text.
 
@@ -607,6 +611,7 @@ def scroll_to_top():
         common.browser.execute_script("window.scrollTo(0, 0);")
         wait(2)
 
+
 def scroll_down():
     """
     scroll to the bottom of the page
@@ -636,7 +641,7 @@ def execute_script(script, ele):
     common.browser.execute_script(script, ele)
 
 
-def screen_shot(file_name: str, file_directory: str='./Screenshots'):
+def screen_shot(file_name: str, file_directory: str = './Screenshots'):
     """
     takes a screen-shot of the current web page and saves. If the specified folder don't exists, it will be created
 
@@ -672,7 +677,6 @@ def click_Calendar(dateToChangeTo):
     # day
     calendarAllDates = '.ui-state-default'
 
-
     # separate the date
     dateX = datetime.datetime.strptime(dateToChangeTo, '%a %d %B, %Y')
 
@@ -686,7 +690,6 @@ def click_Calendar(dateToChangeTo):
 
     # get Day Value for array to click
     selectingDay = int(dateDay) - 1
-
 
     # Change year if appropriate
     currentYear = get_element(calendarYearSelected)
@@ -719,7 +722,7 @@ def send_browser_key(key: Keys):
     ActionChains(common.browser).send_keys(Keys.ESCAPE).perform()
 
 
-def is_print_dialog_present(timeout: int=5) -> bool:
+def is_print_dialog_present(timeout: int = 5) -> bool:
     ret = False
 
     try:
