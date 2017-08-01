@@ -593,7 +593,7 @@ def scroll_to_bottom():
     reached_bottom = False
     while not reached_bottom:
         reached_bottom = common.browser.execute_script(
-            "return $(document).height() == ($(window).height() + $(window).scrollTop());")
+            "return $(document).height() == Math.floor($(window).height() + $(window).scrollTop());")
         common.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         wait(2)
 
@@ -607,7 +607,7 @@ def scroll_to_top():
     reached_top = False
     while not reached_top:
         reached_top = common.browser.execute_script(
-            "return $(document).height() == ($(window).height() + $(window).scrollTop());")
+            "return $(document).height() == Math.floor($(window).height() + $(window).scrollTop());")
         common.browser.execute_script("window.scrollTo(0, 0);")
         wait(2)
 
@@ -719,7 +719,7 @@ def click_Calendar(dateToChangeTo):
 
 
 def send_browser_key(key: Keys):
-    ActionChains(common.browser).send_keys(Keys.ESCAPE).perform()
+    ActionChains(common.browser).send_keys(key).perform()
 
 
 def is_print_dialog_present(timeout: int = 5) -> bool:

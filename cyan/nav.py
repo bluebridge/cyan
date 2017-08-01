@@ -21,6 +21,14 @@ def go_home():
     input.click_element(r"home", By.ID)
 
 
+def go_to_profile():
+    """
+    Navigate to the user profile page
+    """
+    input.click_element("//a[@href='/cosacs/Admin/Profile']", By.XPATH)
+    dom.wait_presence_of_element("#buttonChangePassword")
+
+
 def refresh():
     """
     Refresh current page
@@ -66,9 +74,7 @@ def multi_menu(menu_hierarchy: string, delimiter: string=","):
         if index == 1 or index == last_index:
             ele.click()
         else:
-                # input.hover_on_element(ele)
-                parent = ele.find_element_by_xpath("..")
-                dom.execute_script("arguments[0].style.display='block'", parent.find_element_by_css_selector("ul"))
+                input.hover_on_element(ele)
 
         index += 1
 

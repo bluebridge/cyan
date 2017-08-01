@@ -194,6 +194,29 @@ def select2_set_value_ex(grayed_text: string, value: string):
     click_element(selector)
 
 
+def select2_set_value_filter(value: string, search_filter: string, by: By=By.CSS_SELECTOR):
+    """
+    :param value: value to set to the select2
+    :param search_filter: The element identifier to search by (div expected)
+    :param by: element filter type
+    """
+    security.check_self()
+
+    all_elements = dom.get_elements(search_filter, by)
+
+    all_visible = list(filter(lambda i: i.is_displayed(), all_elements))
+    element_found = (len(all_visible) == 1)
+    print(all_visible)
+    assert element_found, "Can not set text for multiple visible select"
+
+    all_visible[0].click()
+    selector = "div.list-options.ng-scope > div > input"
+    txt = dom.get_element(selector)
+    txt.send_keys(value)
+    selector = "div.list-options.ng-scope > div.list-item-container.ng-scope > div.list-item.ng-scope.ng-binding"
+    click_element(selector)
+
+
 def select_set_value(value: str, search_type: common.TextSearchType=common.TextSearchType.Contain):
     """
     Select a value from a drop down list by passing the string text of that value
@@ -322,8 +345,9 @@ def check_notification(message: string):
 def close_notification():
     try:
         security.check_self()
-        dom.wait_presence_of_element("growlstatus-close", by=By.CLASS_NAME)
-        click_element("growlstatus-close", by=By.CLASS_NAME)
+        dom.wait_presence_of_element("close", by=By.CLASS_NAME)
+        dom.time.sleep(0.5)
+        click_element("close", by=By.CLASS_NAME)
         dom.time.sleep(1)
     finally:
         pass
